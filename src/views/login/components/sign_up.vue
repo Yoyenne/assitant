@@ -1,7 +1,7 @@
 <template>
   <div id="a-container" class="container a-container">
     <form id="a-form" class="form" method="" action="">
-      <h2 class="form_title title">Create Account</h2>
+      <h2 class="form_title title">创建账号</h2>
       <div class="form__icons">
         <img class="form__icon" src="../../../assets/images/smile.png" />
         <img class="form__icon" src="../../../assets/images/shock.png" />
@@ -9,10 +9,10 @@
         <img class="form__icon" src="../../../assets/images//wink.png" />
         <img class="form__icon" src="../../../assets/images/angery.png" />
       </div>
-      <span class="form__span">or use email for registration</span>
-      <input class="form__input" type="text" placeholder="Name" />
-      <input class="form__input" type="password" placeholder="Password" />
-      <button class="form__button button submit">SIGN UP</button>
+      <span class="form__span">此刻你的心空是什么天气呢？</span>
+      <input class="form__input" type="text" placeholder="用户名" />
+      <input class="form__input" type="password" placeholder="密码" />
+      <button class="form__button button submit">注册</button>
     </form>
   </div>
 </template>

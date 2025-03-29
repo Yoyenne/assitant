@@ -4,22 +4,23 @@
       <div class="switch__circle switch__circle--t"></div>
       <!-- 状态1 -->
       <div id="switch-c1" class="switch__container">
-        <h2 class="switch__title title">Welcome Back !</h2>
+        <h2 class="switch__title title">欢迎回来 !</h2>
         <p class="switch__description description">
-          To keep connected with us please login with your personal info
+          你的心理健康旅程一直是我们最关心的事，
+          今天想从哪里开始探索自己的内心世界呢？
         </p>
         <button class="switch__button button switch-btn" @click="change">
-          SIGN IN
+          登录
         </button>
       </div>
       <!-- 状态2 -->
       <div id="switch-c2" class="switch__container is-hidden">
-        <h2 class="switch__title title">Hello Friend !</h2>
+        <h2 class="switch__title title">你好新朋友 !</h2>
         <p class="switch__description description">
-          Enter your personal details and start journey with us
+          留下名字，开启属于你的情绪晴雨表！焦虑、困惑或小确幸，我们都愿意倾听
         </p>
         <button class="switch__button button switch-btn" @click="change">
-          SIGN UP
+          注册
         </button>
       </div>
     </div>

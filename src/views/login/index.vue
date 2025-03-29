@@ -32,21 +32,8 @@ import LoginSwitch from './components/switch.vue';
   align-items: center;
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
-  background: linear-gradient(135deg, #aebed7,#e0f0bb,#e9c5e0);
-  background-size: 400% 400%;
-  animation: gradientAnimation 10s ease infinite;
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  background-color: #ecf0f3;
+  color: #a0a5a8;
 }
 
 .main {
