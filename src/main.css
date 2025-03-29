@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	svg {
+		display: inline;
+		vertical-align: baseline;
+	}
+  
+	button,
+	[type='button'],
+	[type='submit'] {
+		background: #1890ff;
+		background-image: none;
+	}
+
+	button,
+	[type='reset']{
+		background: transparent
+	}
+}
+
+#app{
+	width: 100vw;
+	height: 100vh;
+}
