@@ -13,7 +13,7 @@
 		</div>
 
 		<!-- 上传图片提示 -->
-		<div class="upload-section">
+		<div class="upload-section" id="image-upload-section">
 			<p class="upload-hint">上传图片识别心情：</p>
 			<input
 				id="image-upload"
@@ -25,7 +25,7 @@
 		</div>
 
 		<!-- 上传文字提示 -->
-		<div class="upload-section">
+		<div class="upload-section" id="text-upload-section">
 			<p class="upload-hint">上传文字识别心情：</p>
 			<textarea
 				id="text-upload"

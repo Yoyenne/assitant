@@ -44,7 +44,7 @@ import LoginSwitch from './components/switch.vue';
 	align-items: center;
 	font-family: 'Montserrat', sans-serif;
 	font-size: 12px;
-	background-color: #ecf0f3;
+	background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 	color: #a0a5a8;
 	position: relative;
 }

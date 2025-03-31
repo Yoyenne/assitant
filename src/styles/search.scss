@@ -1,10 +1,9 @@
+
 .search-container {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
 	padding: 2rem; 
-	border: 1px solid #ddd;
-	border-radius: 0.5rem; 
   }
   
   .carousel {
@@ -44,9 +43,18 @@
 	flex-direction: column;
 	gap: 1rem; 
 	padding: 1rem; 
-	border: 1px solid #ddd;
 	border-radius: 0.5rem;
-	background-color: #fff;
+  }
+  
+  #image-upload-section {
+	background-color: #800080; /* 紫色背景 */
+	color: #fff; /* 白色文字 */
+	border: 1px solid #5a005a; /* 深紫色边框 */
+  }
+  
+  #text-upload-section {
+	background-color: #fff; /* 保持白色背景 */
+	color: #333; /* 深色文字 */
   }
   
   .upload-hint {

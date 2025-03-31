@@ -36,6 +36,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
+:deep(.ant-row) {
+  background: linear-gradient(to top, #dfe9f3 0%, rgb(42, 3, 3) 100%) !important;
+  min-height: 100vh;
+}
+
 .word-cloud-container {
   width: 100%;
   height: 100%;

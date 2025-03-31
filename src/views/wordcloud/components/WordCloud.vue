@@ -1,4 +1,5 @@
 <template>
+	<p class="word-cloud-title">请选择你现在的心情</p>
 	<div ref="refChart" class="word-cloud-box"></div>
 </template>
 
@@ -31,10 +32,8 @@ export default defineComponent({
 				series: [
 					{
 						type: 'wordCloud',
-						//sizeRange: [10, 20],
 						rotationRange: [-90, 90],
-						gridSize: 18, // 增大文字间距
-						shape: 'pentagon',
+						gridSize: 10, // 增大文字间距
 						maskImage: maskImage,
 						drawOutOfBound: false,
 						layoutAnimation: true,
@@ -77,13 +76,22 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.word-cloud-title {
+	font-size: 2rem; 
+	font-weight: bold; 
+	color: #333; 
+	text-align: center; 
+	margin-top: 1rem; 
+	margin-bottom: 1rem; 
+}
+
 .word-cloud-box {
 	width: 100%;
 	height: 100%;
 	position: relative;
-	background-image: url('/src/assets/images/love.svg'); 
+	background-image: url('/src/assets/images/love.svg');
 	background-position: left bottom; /* 图片放置在左下角 */
-	background-repeat: no-repeat; 
+	background-repeat: no-repeat;
 	background-size: 25%; /* 设置图片大小为容器宽度的 20% */
 }
 </style>
