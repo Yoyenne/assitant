@@ -54,6 +54,5 @@
   
   <style scoped lang="scss">
   @import '/src/styles/login.scss';
-
   </style>
   

@@ -3,10 +3,10 @@
     <form id="a-form" class="form" method="" action="">
       <h2 class="form_title title">创建账号</h2>
       <div class="form__icons">
-        <img class="form__icon" src="../../../assets/images/smile.png" />
+        <img class="form__icon" src="../../../assets/images/smile1.png" />
         <img class="form__icon" src="../../../assets/images/shock.png" />
-        <img class="form__icon" src="../../../assets/images/cry.png" />
-        <img class="form__icon" src="../../../assets/images//wink.png" />
+        <img class="form__icon" src="../../../assets/images/cry1.png" />
+        <img class="form__icon" src="../../../assets/images//wink1.png" />
         <img class="form__icon" src="../../../assets/images/angery.png" />
       </div>
       <span class="form__span">此刻你的心空是什么天气呢？</span>
