@@ -82,7 +82,6 @@ export default defineComponent({
 	color: #333; 
 	text-align: center; 
 	margin-top: 1rem; 
-	margin-bottom: 1rem; 
 }
 
 .word-cloud-box {
@@ -92,6 +91,7 @@ export default defineComponent({
 	background-image: url('/src/assets/images/love.svg');
 	background-position: left bottom; /* 图片放置在左下角 */
 	background-repeat: no-repeat;
-	background-size: 25%; /* 设置图片大小为容器宽度的 20% */
+	background-size: 25%; 
 }
+
 </style>

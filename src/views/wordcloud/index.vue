@@ -1,6 +1,6 @@
 <template>
   <!-- 使用 ant design 的行列布局 -->
-  <a-row class="min-h-screen">
+  <a-row class="min-h-screen gradient-background">
     <!-- 左侧区域：词云区域，占 50% -->
     <a-col :span="12" class=" p-0 flex">
       <div class="word-cloud-container">
@@ -36,11 +36,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-:deep(.ant-row) {
-  background: linear-gradient(to top, #dfe9f3 0%, rgb(42, 3, 3) 100%) !important;
-  min-height: 100vh;
-}
-
 .word-cloud-container {
   width: 100%;
   height: 100%;
@@ -50,11 +45,7 @@ export default defineComponent({
   align-items: center; 
 }
 
-/* 移除左侧内边距和滚动 */
-.bg-gray-200 {
-  display: flex;
-  align-items: center; 
-  justify-content: center; 
-  overflow: hidden; /* 避免出现滚动条 */
+.gradient-background {
+  background-image: linear-gradient(to top, #f3e3e6 0%, #e3eeff 99%, #e3eeff 100%);
 }
 </style>
