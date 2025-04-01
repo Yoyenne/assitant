@@ -1,0 +1,200 @@
+.word-cloud-title {
+    font-size: 2rem; 
+    font-weight: bold; 
+    color: #333; 
+    text-align: center; 
+    margin-top: 1rem;
+    margin-bottom: 2rem; 
+  }
+  
+  .word-cloud-box {
+    width: 100%;
+    height: 60vh; 
+    min-height: 450px; // 设置最小高度，确保在小屏幕上不会太小
+    max-height: 1000px; // 设置最大高度，确保在大屏幕上不会过大
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    overflow: hidden; // 防止云朵溢出
+    
+    // 添加云朵装饰元素
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none; // 确保不影响交互
+    }
+    
+    // 第一个云朵装饰 - 左上方
+    &::before {
+      width: 120px;
+      height: 120px;
+      background-color: rgba(255, 255, 255, 0.8);
+      top: -40px;
+      left: 15%;
+      filter: blur(30px);
+      animation: drift-left 30s linear infinite;
+    }
+    
+    // 第二个云朵装饰 - 右上方
+    &::after {
+      width: 150px;
+      height: 100px;
+      background-color: rgba(255, 255, 255, 0.7);
+      top: -30px;
+      right: 20%;
+      filter: blur(25px);
+      animation: drift-right 35s linear infinite;
+    }
+    
+    // 媒体查询，针对不同屏幕尺寸调整
+    @media (max-width: 768px) {
+      height: 50vh; // 小屏幕上占据更少的高度
+      min-height: 300px;
+      
+      &::before {
+        width: 80px;
+        height: 80px;
+      }
+      
+      &::after {
+        width: 100px;
+        height: 70px;
+      }
+    }
+    
+    @media (min-width: 1200px) {
+      height: 70vh; // 在大屏幕上可以占据更多空间
+    }
+  }
+  
+  // 动画浮动云朵容器
+  .cloud-animation-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  // 浮动云朵实例 - 使用白色创建云朵效果
+  .floating-cloud {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    filter: blur(20px);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  
+  // 浮动云朵实例
+  .cloud1 {
+    width: 180px;
+    height: 100px;
+    top: 20%;
+    left: -180px;
+    animation: float-right 40s 0s linear infinite;
+  }
+  
+  .cloud2 {
+    width: 150px;
+    height: 80px;
+    top: 45%;
+    right: -150px;
+    animation: float-left 50s 5s linear infinite;
+  }
+  
+  .cloud3 {
+    width: 120px;
+    height: 70px;
+    bottom: 25%;
+    left: -120px;
+    animation: float-right 45s 10s linear infinite;
+  }
+  
+  .cloud4 {
+    width: 200px;
+    height: 120px;
+    bottom: 10%;
+    left: 30%;
+    animation: pulsate 20s 0s ease-in-out infinite;
+    opacity: 0.3;
+  }
+  
+  // 云朵从左向右漂浮
+  @keyframes float-right {
+    0% {
+      transform: translateX(0) translateY(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.6;
+    }
+    90% {
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateX(calc(100vw + 200px)) translateY(20px);
+      opacity: 0;
+    }
+  }
+  
+  // 云朵从右向左漂浮
+  @keyframes float-left {
+    0% {
+      transform: translateX(0) translateY(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.6;
+    }
+    90% {
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateX(calc(-100vw - 200px)) translateY(-20px);
+      opacity: 0;
+    }
+  }
+  
+  // 云朵左右轻微漂移
+  @keyframes drift-left {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(-30px) translateY(10px);
+    }
+  }
+  
+  // 云朵右左轻微漂移
+  @keyframes drift-right {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(30px) translateY(-10px);
+    }
+  }
+  
+  // 云朵缓慢脉动
+  @keyframes pulsate {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.6;
+    }
+  }
+  

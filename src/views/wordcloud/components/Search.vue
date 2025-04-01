@@ -27,7 +27,7 @@
   
 	  <!-- 上传图片提示 -->
 	  <div class="upload-section" id="image-upload-section">
-		<p class="upload-hint">上传图片识别心情：</p>
+		<p class="upload-hint">上传一张图片，让我们帮你解读其中的情绪密码</p>
 		<label for="image-upload" class="custom-file-upload">
 		  <span>选择图片</span>
 		</label>
@@ -48,7 +48,7 @@
   
 	  <!-- 上传文字提示 -->
 	  <div class="upload-section" id="text-upload-section">
-		<p class="upload-hint">上传文字识别心情：</p>
+		<p class="upload-hint">无论是零散的词句还是心底的长诗，写下它们，我们会为你匹配最懂此刻心事的旋律，</p>
 		<textarea
 		  id="text-upload"
 		  class="text-input"

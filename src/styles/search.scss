@@ -1,7 +1,7 @@
 // 变量定义
-$primary-color: #7a5ef8;
-$primary-light: #9c85fa;
-$secondary-color: #ebe8ff;
+$primary-color: #8da7f6da;
+$primary-light: #acc2fc;
+$secondary-color: #e8efff;
 $text-color: #2e2e3a;
 $bg-light: #f9f9fb;
 $card-bg: #ffffff;
@@ -9,7 +9,7 @@ $border-radius-sm: 0.5rem;
 $border-radius-md: 1rem;
 $border-radius-lg: 1.25rem;
 $shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
-$shadow-md: 0 8px 15px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 8px 15px rgba(0, 0, 0, 0.15);
 $transition-normal: all 0.3s ease;
 
 // 主容器样式
@@ -18,8 +18,8 @@ $transition-normal: all 0.3s ease;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  min-height: 100vh;
-  background-image: linear-gradient(135deg, #f5f2ff 0%, #e7e1fd 100%);
+  min-height: 90vh;
+  // 字体待更改：
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   gap: 2rem;
 }
@@ -74,7 +74,7 @@ $transition-normal: all 0.3s ease;
     left: 0;
     right: 0;
     height: 60px;
-    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+    background: linear-gradient(to top, rgba(28, 41, 138, 0.227), transparent);
     z-index: 2;
     pointer-events: none;
   }
@@ -118,7 +118,7 @@ $transition-normal: all 0.3s ease;
   transition: $transition-normal;
   
   &:hover {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.203);
   }
   
   // 标题样式
@@ -148,17 +148,18 @@ $transition-normal: all 0.3s ease;
   // 自定义上传按钮
   .custom-file-upload {
     display: inline-block;
-    background-color: white;
-    color: $primary-color;
-    padding: 0.75rem 1.5rem;
+    background-color: $primary-color;
+    color:white;
+    padding: 0.5rem 1rem; /* 缩小内边距 */
     border-radius: $border-radius-sm;
     cursor: pointer;
     transition: $transition-normal;
     font-weight: 500;
+    font-size: 0.9rem; /* 缩小字体大小 */
     border: 2px solid $primary-light;
     
     &:hover {
-      background-color: $primary-color;
+      background-color: #748bf3;
       color: white;
     }
   }

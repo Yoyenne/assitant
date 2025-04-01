@@ -1,7 +1,16 @@
 <template>
 	<p class="word-cloud-title">请选择你现在的心情</p>
-	<div ref="refChart" class="word-cloud-box"></div>
-</template>
+	<div ref="refChart" class="word-cloud-box">
+	  <!-- 添加云朵动画容器 -->
+	  <div class="cloud-animation-container">
+		<div class="floating-cloud cloud1"></div>
+		<div class="floating-cloud cloud2"></div>
+		<div class="floating-cloud cloud3"></div>
+		<div class="floating-cloud cloud4"></div>
+	  </div>
+	</div>
+  </template>
+  
 
 <script>
 import { defineComponent, nextTick, ref } from 'vue';
@@ -44,9 +53,9 @@ export default defineComponent({
 								return (
 									'rgb(' +
 									[
-										Math.round(Math.random() * 200) + 50,
-										Math.round(Math.random() * 50),
-										Math.round(Math.random() * 50) + 50
+									Math.round(Math.random() * 40) + 80,  // 较低的红色值
+                    				Math.round(Math.random() * 80) + 140, // 中等的绿色值
+                    				Math.round(Math.random() * 40) + 210  // 较高的蓝色值
 									].join(',') +
 									')'
 								);
@@ -76,22 +85,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.word-cloud-title {
-	font-size: 2rem; 
-	font-weight: bold; 
-	color: #333; 
-	text-align: center; 
-	margin-top: 1rem; 
-}
-
-.word-cloud-box {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	background-image: url('/src/assets/images/love.svg');
-	background-position: left bottom; /* 图片放置在左下角 */
-	background-repeat: no-repeat;
-	background-size: 25%; 
-}
-
+@import '/src/styles/wordcloud.scss';
 </style>

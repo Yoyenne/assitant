@@ -46,6 +46,6 @@ export default defineComponent({
 }
 
 .gradient-background {
-  background-image: linear-gradient(to top, #f3e3e6 0%, #e3eeff 99%, #e3eeff 100%);
+  background-image: linear-gradient(to bottom, #d5e3ff 0%, #e8f2ff 60%, #f5f9ff 100%);
 }
 </style>
