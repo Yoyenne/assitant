@@ -15,6 +15,8 @@ declare module '@vue/runtime-core' {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SideNav: typeof import('./src/components/navigation/SideNav.vue')['default']
+    ToBar: typeof import('./src/components/navigation/ToBar.vue')['default']
     WordCloud: typeof import('./src/components/WordCloud.vue')['default']
   }
 }

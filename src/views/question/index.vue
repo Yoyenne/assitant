@@ -1,4 +1,6 @@
 <template>
+  <!-- 使用 MainLayout 作为页面的布局 -->
+  <main-layout page-title="心理健康测评">
     <div>
       <div class="text-center mb-8">
         <h3 class="text-xl font-semibold mb-2">心理健康测评</h3>
@@ -212,396 +214,429 @@
         </div>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, computed } from 'vue';
-  
-  // 测评问卷数据
-  const questionnaires = ref([
-    {
-      id: 1,
-      title: '抑郁症筛查（PHQ-9）',
-      description: '测评抑郁症状严重程度的量表，广泛用于临床筛查',
-      timeEstimate: '3',
-      icon: 'fas fa-brain',
-      bgColor: 'bg-gradient-to-r from-blue-400 to-indigo-500',
-      questions: [
-        {
-          text: '在过去的两周内，有多少天您感到做事时提不起劲或没有兴趣？',
-          options: [
-            { text: '完全没有', value: 0 },
-            { text: '有几天', value: 1 },
-            { text: '一半以上时间', value: 2 },
-            { text: '几乎每天', value: 3 }
-          ]
-        },
-        {
-          text: '在过去的两周内，有多少天您感到心情低落、沮丧或绝望？',
-          options: [
-            { text: '完全没有', value: 0 },
-            { text: '有几天', value: 1 },
-            { text: '一半以上时间', value: 2 },
-            { text: '几乎每天', value: 3 }
-          ]
-        },
-        {
-          text: '在过去的两周内，有多少天您入睡困难、睡不安稳或睡眠太多？',
-          options: [
-            { text: '完全没有', value: 0 },
-            { text: '有几天', value: 1 },
-            { text: '一半以上时间', value: 2 },
-            { text: '几乎每天', value: 3 }
-          ]
-        },
-        // 更多问题...
-      ]
-    },
-    {
-      id: 2,
-      title: '焦虑自评量表（GAD-7）',
-      description: '评估广泛性焦虑障碍症状的简短问卷',
-      timeEstimate: '2',
-      icon: 'fas fa-wind',
-      bgColor: 'bg-gradient-to-r from-green-400 to-teal-500',
-      questions: [
-        {
-          text: '在过去的两周内，有多少天您感到紧张、焦虑或烦躁？',
-          options: [
-            { text: '完全没有', value: 0 },
-            { text: '有几天', value: 1 },
-            { text: '一半以上时间', value: 2 },
-            { text: '几乎每天', value: 3 }
-          ]
-        },
-        // 更多问题...
-      ]
-    },
-    {
-      id: 3,
-      title: '睡眠质量指数（PSQI）',
-      description: '评估睡眠质量和睡眠障碍的标准化问卷',
-      timeEstimate: '5',
-      icon: 'fas fa-moon',
-      bgColor: 'bg-gradient-to-r from-purple-400 to-pink-500',
-      questions: [
-        // 问题列表...
-      ]
-    },
-    {
-      id: 4,
-      title: '压力感知量表（PSS）',
-      description: '测量个体对生活中压力事件的感知程度',
-      timeEstimate: '3',
-      icon: 'fas fa-heartbeat',
-      bgColor: 'bg-gradient-to-r from-red-400 to-orange-500',
-      questions: [
-        // 问题列表...
-      ]
-    },
-    {
-      id: 5,
-      title: '幸福感指数（OHI）',
-      description: '衡量个体主观幸福感和生活满意度的量表',
-      timeEstimate: '8',
-      icon: 'fas fa-smile',
-      bgColor: 'bg-gradient-to-r from-yellow-400 to-yellow-600',
-      questions: [
-        // 问题列表...
-      ]
-    },
-    {
-      id: 6,
-      title: '社交焦虑量表（SIAS）',
-      description: '评估社交互动中的焦虑程度',
-      timeEstimate: '6',
-      icon: 'fas fa-users',
-      bgColor: 'bg-gradient-to-r from-indigo-400 to-purple-500',
-      questions: [
-        // 问题列表...
-      ]
-    }
-  ]);
-  
-  // 历史记录数据
-  const history = ref([
-    {
-      id: 1,
-      title: '抑郁症筛查（PHQ-9）',
-      date: '2023-07-15',
-      score: 3,
-      level: '轻微',
-      levelClass: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-      trend: -2,
-      trendClass: 'text-green-500 dark:text-green-400',
-      trendIcon: 'fas fa-arrow-down',
-      trendText: '2分'
-    },
-    {
-      id: 2,
-      title: '焦虑自评量表（GAD-7）',
-      date: '2023-07-10',
-      score: 12,
-      level: '中度',
-      levelClass: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-      trend: 3,
-      trendClass: 'text-red-500 dark:text-red-400',
-      trendIcon: 'fas fa-arrow-up',
-      trendText: '3分'
-    },
-    {
-      id: 3,
-      title: '睡眠质量指数（PSQI）',
-      date: '2023-07-05',
-      score: 4,
-      level: '良好',
-      levelClass: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-      trend: 0,
-      trendClass: 'text-gray-500 dark:text-gray-400',
-      trendIcon: 'fas fa-minus',
-      trendText: '持平'
-    }
-  ]);
-  
-  // 状态变量
-  const activeQuestionnaire = ref(null);
-  const currentQuestionIndex = ref(0);
-  const answers = ref([]);
-  const showResults = ref(false);
-  const testScore = ref({
-    score: 0,
-    maxScore: 0,
-    level: '',
-    description: '',
-    suggestions: []
-  });
-  
-  // 当前问卷和问题
-  const currentQuestionnaire = computed(() => {
-    if (!activeQuestionnaire.value) return null;
-    return questionnaires.value.find(q => q.id === activeQuestionnaire.value);
-  });
-  
-  const currentQuestion = computed(() => {
-    if (!currentQuestionnaire.value) return null;
-    return currentQuestionnaire.value.questions[currentQuestionIndex.value];
-  });
-  
-  // 开始测评
-  const startQuestionnaire = (id) => {
-    activeQuestionnaire.value = id;
-    currentQuestionIndex.value = 0;
-    answers.value = new Array(questionnaires.value.find(q => q.id === id).questions.length).fill(undefined);
-  };
-  
-  // 退出测评
-  const exitQuestionnaire = () => {
-    if (confirm('确定要退出当前测评吗？您的进度将不会被保存。')) {
-      activeQuestionnaire.value = null;
-    }
-  };
-  
-  // 选择答案
-  const selectAnswer = (optionIndex) => {
-    answers.value[currentQuestionIndex.value] = optionIndex;
-  };
-  
-  // 前一题/后一题
-  const prevQuestion = () => {
-    if (currentQuestionIndex.value > 0) {
-      currentQuestionIndex.value--;
-    }
-  };
-  
-  const nextQuestion = () => {
-    if (currentQuestionIndex.value < currentQuestionnaire.value.questions.length - 1 && 
-        answers.value[currentQuestionIndex.value] !== undefined) {
-      currentQuestionIndex.value++;
-    }
-  };
-  
-  // 完成测评
-  const completeQuestionnaire = () => {
-    if (answers.value[currentQuestionIndex.value] === undefined) return;
-    
-    // 计算得分
-    let totalScore = 0;
-    let maxScore = 0;
-    
-    answers.value.forEach((answer, index) => {
-      if (answer !== undefined && currentQuestionnaire.value.questions[index]) {
-        totalScore += currentQuestionnaire.value.questions[index].options[answer].value;
-        maxScore += 3; // 假设每个问题最高分为3
+  </main-layout>
+</template>
+
+<script>
+// 引入 MainLayout 布局组件
+import MainLayout from '@/layouts/MainLayout.vue';
+import { ref, computed } from 'vue';
+
+export default {
+  name: 'AssessmentPage',
+  components: {
+    MainLayout // 注册 MainLayout 组件
+  },
+  setup() {
+    // 测评问卷数据
+    const questionnaires = ref([
+      {
+        id: 1,
+        title: '抑郁症筛查（PHQ-9）',
+        description: '测评抑郁症状严重程度的量表，广泛用于临床筛查',
+        timeEstimate: '3',
+        icon: 'fas fa-brain',
+        bgColor: 'bg-gradient-to-r from-blue-400 to-indigo-500',
+        questions: [
+          {
+            text: '在过去的两周内，有多少天您感到做事时提不起劲或没有兴趣？',
+            options: [
+              { text: '完全没有', value: 0 },
+              { text: '有几天', value: 1 },
+              { text: '一半以上时间', value: 2 },
+              { text: '几乎每天', value: 3 }
+            ]
+          },
+          {
+            text: '在过去的两周内，有多少天您感到心情低落、沮丧或绝望？',
+            options: [
+              { text: '完全没有', value: 0 },
+              { text: '有几天', value: 1 },
+              { text: '一半以上时间', value: 2 },
+              { text: '几乎每天', value: 3 }
+            ]
+          },
+          {
+            text: '在过去的两周内，有多少天您入睡困难、睡不安稳或睡眠太多？',
+            options: [
+              { text: '完全没有', value: 0 },
+              { text: '有几天', value: 1 },
+              { text: '一半以上时间', value: 2 },
+              { text: '几乎每天', value: 3 }
+            ]
+          },
+          // 更多问题...
+        ]
+      },
+      {
+        id: 2,
+        title: '焦虑自评量表（GAD-7）',
+        description: '评估广泛性焦虑障碍症状的简短问卷',
+        timeEstimate: '2',
+        icon: 'fas fa-wind',
+        bgColor: 'bg-gradient-to-r from-green-400 to-teal-500',
+        questions: [
+          {
+            text: '在过去的两周内，有多少天您感到紧张、焦虑或烦躁？',
+            options: [
+              { text: '完全没有', value: 0 },
+              { text: '有几天', value: 1 },
+              { text: '一半以上时间', value: 2 },
+              { text: '几乎每天', value: 3 }
+            ]
+          },
+          // 更多问题...
+        ]
+      },
+      {
+        id: 3,
+        title: '睡眠质量指数（PSQI）',
+        description: '评估睡眠质量和睡眠障碍的标准化问卷',
+        timeEstimate: '5',
+        icon: 'fas fa-moon',
+        bgColor: 'bg-gradient-to-r from-purple-400 to-pink-500',
+        questions: [
+          // 问题列表...
+        ]
+      },
+      {
+        id: 4,
+        title: '压力感知量表（PSS）',
+        description: '测量个体对生活中压力事件的感知程度',
+        timeEstimate: '3',
+        icon: 'fas fa-heartbeat',
+        bgColor: 'bg-gradient-to-r from-red-400 to-orange-500',
+        questions: [
+          // 问题列表...
+        ]
+      },
+      {
+        id: 5,
+        title: '幸福感指数（OHI）',
+        description: '衡量个体主观幸福感和生活满意度的量表',
+        timeEstimate: '8',
+        icon: 'fas fa-smile',
+        bgColor: 'bg-gradient-to-r from-yellow-400 to-yellow-600',
+        questions: [
+          // 问题列表...
+        ]
+      },
+      {
+        id: 6,
+        title: '社交焦虑量表（SIAS）',
+        description: '评估社交互动中的焦虑程度',
+        timeEstimate: '6',
+        icon: 'fas fa-users',
+        bgColor: 'bg-gradient-to-r from-indigo-400 to-purple-500',
+        questions: [
+          // 问题列表...
+        ]
       }
+    ]);
+    
+    // 历史记录数据
+    const history = ref([
+      {
+        id: 1,
+        title: '抑郁症筛查（PHQ-9）',
+        date: '2023-07-15',
+        score: 3,
+        level: '轻微',
+        levelClass: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+        trend: -2,
+        trendClass: 'text-green-500 dark:text-green-400',
+        trendIcon: 'fas fa-arrow-down',
+        trendText: '2分'
+      },
+      {
+        id: 2,
+        title: '焦虑自评量表（GAD-7）',
+        date: '2023-07-10',
+        score: 12,
+        level: '中度',
+        levelClass: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+        trend: 3,
+        trendClass: 'text-red-500 dark:text-red-400',
+        trendIcon: 'fas fa-arrow-up',
+        trendText: '3分'
+      },
+      {
+        id: 3,
+        title: '睡眠质量指数（PSQI）',
+        date: '2023-07-05',
+        score: 4,
+        level: '良好',
+        levelClass: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+        trend: 0,
+        trendClass: 'text-gray-500 dark:text-gray-400',
+        trendIcon: 'fas fa-minus',
+        trendText: '持平'
+      }
+    ]);
+    
+    // 状态变量
+    const activeQuestionnaire = ref(null);
+    const currentQuestionIndex = ref(0);
+    const answers = ref([]);
+    const showResults = ref(false);
+    const testScore = ref({
+      score: 0,
+      maxScore: 0,
+      level: '',
+      description: '',
+      suggestions: []
     });
     
-    // 设置结果
-    testScore.value = {
-      score: totalScore,
-      maxScore: maxScore,
-      level: getLevel(totalScore, currentQuestionnaire.value.id),
-      description: getLevelDescription(totalScore, currentQuestionnaire.value.id),
-      suggestions: getSuggestions(totalScore, currentQuestionnaire.value.id)
+    // 当前问卷和问题
+    const currentQuestionnaire = computed(() => {
+      if (!activeQuestionnaire.value) return null;
+      return questionnaires.value.find(q => q.id === activeQuestionnaire.value);
+    });
+    
+    const currentQuestion = computed(() => {
+      if (!currentQuestionnaire.value) return null;
+      return currentQuestionnaire.value.questions[currentQuestionIndex.value];
+    });
+    
+    // 开始测评
+    const startQuestionnaire = (id) => {
+      activeQuestionnaire.value = id;
+      currentQuestionIndex.value = 0;
+      answers.value = new Array(questionnaires.value.find(q => q.id === id).questions.length).fill(undefined);
     };
     
-    showResults.value = true;
-  };
-  
-  // 根据得分获取级别
-  const getLevel = (score, questionnaireId) => {
-    if (questionnaireId === 1) { // PHQ-9
-      if (score < 5) return '无或轻微抑郁';
-      if (score < 10) return '轻度抑郁';
-      if (score < 15) return '中度抑郁';
-      if (score < 20) return '中重度抑郁';
-      return '重度抑郁';
-    } else if (questionnaireId === 2) { // GAD-7
-      if (score < 5) return '无或轻微焦虑';
-      if (score < 10) return '轻度焦虑';
-      if (score < 15) return '中度焦虑';
-      return '重度焦虑';
-    }
-    return '未知级别';
-  };
-  
-  // 获取级别描述
-  const getLevelDescription = (score, questionnaireId) => {
-    if (questionnaireId === 1) { // PHQ-9
-      if (score < 5) return '您的抑郁症状极轻或没有，心理状态良好。';
-      if (score < 10) return '您有轻微的抑郁症状，可能需要关注自己的心理健康。';
-      if (score < 15) return '您有中度抑郁症状，建议考虑寻求专业帮助。';
-      if (score < 20) return '您有中重度抑郁症状，强烈建议咨询专业心理医生。';
-      return '您有重度抑郁症状，请尽快寻求专业医疗帮助。';
-    }
-    return '测评完成，感谢参与。';
-  };
-  
-  // 获取建议
-  const getSuggestions = (score, questionnaireId) => {
-    if (questionnaireId === 1) { // PHQ-9
-      if (score < 5) {
-        return [
-          '保持健康的生活方式和积极心态',
-          '定期锻炼身体，保持社交活动',
-          '当遇到压力时，尝试放松技巧如深呼吸或冥想'
-        ];
+    // 退出测评
+    const exitQuestionnaire = () => {
+      if (confirm('确定要退出当前测评吗？您的进度将不会被保存。')) {
+        activeQuestionnaire.value = null;
       }
-      if (score < 10) {
-        return [
-          '增加日常活动和社交互动',
-          '学习压力管理技巧',
-          '保持规律的作息时间',
-          '可考虑参加一些心理健康相关讲座或课程'
-        ];
-      }
-      return [
-        '建议咨询专业心理医生或精神科医生',
-        '学习认知行为疗法等自助技巧',
-        '保持与亲友的沟通，不要独自面对问题',
-        '确保充足的睡眠和健康的饮食'
-      ];
-    }
-    return ['感谢参与测评，建议定期关注自己的心理健康状况。'];
-  };
-  
-  // 获取分数对应的颜色类
-  const getScoreColor = (score) => {
-    if (score < 5) return 'bg-green-500';
-    if (score < 10) return 'bg-yellow-500';
-    if (score < 15) return 'bg-orange-500';
-    return 'bg-red-500';
-  };
-  
-  // 关闭结果
-  const closeResults = () => {
-    showResults.value = false;
-    activeQuestionnaire.value = null;
-  };
-  
-  // 保存结果
-  const saveResults = () => {
-    // 实际项目中，这里应该调用API保存结果
-    alert('结果已保存！');
-    closeResults();
-    
-    // 模拟添加到历史记录
-    const newRecord = {
-      id: history.value.length + 1,
-      title: currentQuestionnaire.value.title,
-      date: new Date().toISOString().split('T')[0],
-      score: testScore.value.score,
-      level: testScore.value.level,
-      levelClass: getScoreLevelClass(testScore.value.score),
-      trend: 0,
-      trendClass: 'text-gray-500 dark:text-gray-400',
-      trendIcon: 'fas fa-minus',
-      trendText: '首次'
     };
     
-    history.value.unshift(newRecord);
-  };
-  
-  // 获取分数级别样式类
-  const getScoreLevelClass = (score) => {
-    if (score < 5) return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-    if (score < 10) return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-    if (score < 15) return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
-    return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
-  };
-  
-  // 查看历史记录
-  const viewRecord = (id) => {
-    // 实际项目中，这里应该获取详细记录并显示
-    alert(`查看记录 ID: ${id}`);
-  };
-  </script>
-  
-  <style scoped>
-  .scale-animation {
-    transition: transform 0.3s ease-in-out;
+    // 选择答案
+    const selectAnswer = (optionIndex) => {
+      answers.value[currentQuestionIndex.value] = optionIndex;
+    };
+    
+    // 前一题/后一题
+    const prevQuestion = () => {
+      if (currentQuestionIndex.value > 0) {
+        currentQuestionIndex.value--;
+      }
+    };
+    
+    const nextQuestion = () => {
+      if (currentQuestionIndex.value < currentQuestionnaire.value.questions.length - 1 && 
+          answers.value[currentQuestionIndex.value] !== undefined) {
+        currentQuestionIndex.value++;
+      }
+    };
+    
+    // 完成测评
+    const completeQuestionnaire = () => {
+      if (answers.value[currentQuestionIndex.value] === undefined) return;
+      
+      // 计算得分
+      let totalScore = 0;
+      let maxScore = 0;
+      
+      answers.value.forEach((answer, index) => {
+        if (answer !== undefined && currentQuestionnaire.value.questions[index]) {
+          totalScore += currentQuestionnaire.value.questions[index].options[answer].value;
+          maxScore += 3; // 假设每个问题最高分为3
+        }
+      });
+      
+      // 设置结果
+      testScore.value = {
+        score: totalScore,
+        maxScore: maxScore,
+        level: getLevel(totalScore, currentQuestionnaire.value.id),
+        description: getLevelDescription(totalScore, currentQuestionnaire.value.id),
+        suggestions: getSuggestions(totalScore, currentQuestionnaire.value.id)
+      };
+      
+      showResults.value = true;
+    };
+    
+    // 根据得分获取级别
+    const getLevel = (score, questionnaireId) => {
+      if (questionnaireId === 1) { // PHQ-9
+        if (score < 5) return '无或轻微抑郁';
+        if (score < 10) return '轻度抑郁';
+        if (score < 15) return '中度抑郁';
+        if (score < 20) return '中重度抑郁';
+        return '重度抑郁';
+      } else if (questionnaireId === 2) { // GAD-7
+        if (score < 5) return '无或轻微焦虑';
+        if (score < 10) return '轻度焦虑';
+        if (score < 15) return '中度焦虑';
+        return '重度焦虑';
+      }
+      return '未知级别';
+    };
+    
+    // 获取级别描述
+    const getLevelDescription = (score, questionnaireId) => {
+      if (questionnaireId === 1) { // PHQ-9
+        if (score < 5) return '您的抑郁症状极轻或没有，心理状态良好。';
+        if (score < 10) return '您有轻微的抑郁症状，可能需要关注自己的心理健康。';
+        if (score < 15) return '您有中度抑郁症状，建议考虑寻求专业帮助。';
+        if (score < 20) return '您有中重度抑郁症状，强烈建议咨询专业心理医生。';
+        return '您有重度抑郁症状，请尽快寻求专业医疗帮助。';
+      }
+      return '测评完成，感谢参与。';
+    };
+    
+    // 获取建议
+    const getSuggestions = (score, questionnaireId) => {
+      if (questionnaireId === 1) { // PHQ-9
+        if (score < 5) {
+          return [
+            '保持健康的生活方式和积极心态',
+            '定期锻炼身体，保持社交活动',
+            '当遇到压力时，尝试放松技巧如深呼吸或冥想'
+          ];
+        }
+        if (score < 10) {
+          return [
+            '增加日常活动和社交互动',
+            '学习压力管理技巧',
+            '保持规律的作息时间',
+            '可考虑参加一些心理健康相关讲座或课程'
+          ];
+        }
+        return [
+          '建议咨询专业心理医生或精神科医生',
+          '学习认知行为疗法等自助技巧',
+          '保持与亲友的沟通，不要独自面对问题',
+          '确保充足的睡眠和健康的饮食'
+        ];
+      }
+      return ['感谢参与测评，建议定期关注自己的心理健康状况。'];
+    };
+    
+    // 获取分数对应的颜色类
+    const getScoreColor = (score) => {
+      if (score < 5) return 'bg-green-500';
+      if (score < 10) return 'bg-yellow-500';
+      if (score < 15) return 'bg-orange-500';
+      return 'bg-red-500';
+    };
+    
+    // 关闭结果
+    const closeResults = () => {
+      showResults.value = false;
+      activeQuestionnaire.value = null;
+    };
+    
+    // 保存结果
+    const saveResults = () => {
+      // 实际项目中，这里应该调用API保存结果
+      alert('结果已保存！');
+      closeResults();
+      
+      // 模拟添加到历史记录
+      const newRecord = {
+        id: history.value.length + 1,
+        title: currentQuestionnaire.value.title,
+        date: new Date().toISOString().split('T')[0],
+        score: testScore.value.score,
+        level: testScore.value.level,
+        levelClass: getScoreLevelClass(testScore.value.score),
+        trend: 0,
+        trendClass: 'text-gray-500 dark:text-gray-400',
+        trendIcon: 'fas fa-minus',
+        trendText: '首次'
+      };
+      
+      history.value.unshift(newRecord);
+    };
+    
+    // 获取分数级别样式类
+    const getScoreLevelClass = (score) => {
+      if (score < 5) return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+      if (score < 10) return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+      if (score < 15) return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
+      return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+    };
+    
+    // 查看历史记录
+    const viewRecord = (id) => {
+      // 实际项目中，这里应该获取详细记录并显示
+      alert(`查看记录 ID: ${id}`);
+    };
+
+    return {
+      questionnaires,
+      history,
+      activeQuestionnaire,
+      currentQuestionIndex,
+      answers,
+      showResults,
+      testScore,
+      currentQuestionnaire,
+      currentQuestion,
+      startQuestionnaire,
+      exitQuestionnaire,
+      selectAnswer,
+      prevQuestion,
+      nextQuestion,
+      completeQuestionnaire,
+      getScoreColor,
+      closeResults,
+      saveResults,
+      viewRecord
+    };
   }
-  
-  .scale-animation:hover {
-    transform: scale(1.03);
-  }
-  
-  .primary-100 {
-    background-color: rgba(93, 92, 222, 0.1);
-  }
-  
-  .primary-400 {
-    color: #7E7DE6;
-  }
-  
-  .primary-600 {
-    color: #5D5CDE;
-  }
-  
-  .primary-700 {
-    color: #4847B8;
-  }
-  
-  .bg-primary-100 {
-    background-color: rgba(93, 92, 222, 0.1);
-  }
-  
-  .bg-primary-600 {
-    background-color: #5D5CDE;
-  }
-  
-  .bg-primary-700 {
-    background-color: #4847B8;
-  }
-  
-  .bg-primary-900 {
-    background-color: rgba(93, 92, 222, 0.2);
-  }
-  
-  .border-primary-400 {
-    border-color: #7E7DE6;
-  }
-  
-  .border-primary-600 {
-    border-color: #5D5CDE;
-  }
-  </style>
+}
+</script>
+
+<style scoped>
+.scale-animation {
+  transition: transform 0.3s ease-in-out;
+}
+
+.scale-animation:hover {
+  transform: scale(1.03);
+}
+
+.primary-100 {
+  background-color: rgba(93, 92, 222, 0.1);
+}
+
+.primary-400 {
+  color: #7E7DE6;
+}
+
+.primary-600 {
+  color: #5D5CDE;
+}
+
+.primary-700 {
+  color: #4847B8;
+}
+
+.bg-primary-100 {
+  background-color: rgba(93, 92, 222, 0.1);
+}
+
+.bg-primary-600 {
+  background-color: #5D5CDE;
+}
+
+.bg-primary-700 {
+  background-color: #4847B8;
+}
+
+.bg-primary-900 {
+  background-color: rgba(93, 92, 222, 0.2);
+}
+
+.border-primary-400 {
+  border-color: #7E7DE6;
+}
+
+.border-primary-600 {
+  border-color: #5D5CDE;
+}
+</style>

@@ -1,4 +1,6 @@
 <template>
+  <!-- 使用 MainLayout 作为页面的布局 -->
+  <main-layout page-title="正念辅助 - 音乐疗愈">
     <div>
       <div class="mb-8">
         <div class="flex items-center justify-between mb-4">
@@ -101,208 +103,232 @@
         </div>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-  
-  const props = defineProps({
-    emotion: {
-      type: String,
-      default: '快乐'
-    }
-  });
-  
-  // 音乐数据（实际项目中通常从API获取）
-  const songs = ref([
-    { 
-      id: 1, 
-      title: '阳光灿烂的日子', 
-      artist: '周杰伦', 
-      duration: '3:45',
-      bgColor: 'bg-gradient-to-r from-yellow-400 to-yellow-600',
-      isFavorite: false
-    },
-    { 
-      id: 2, 
-      title: 'Happy', 
-      artist: 'Pharrell Williams', 
-      duration: '3:53',
-      bgColor: 'bg-gradient-to-r from-yellow-300 to-orange-500',
-      isFavorite: true
-    },
-    { 
-      id: 3, 
-      title: 'Uptown Funk', 
-      artist: 'Mark Ronson ft. Bruno Mars', 
-      duration: '4:30',
-      bgColor: 'bg-gradient-to-r from-orange-400 to-pink-500',
-      isFavorite: false
-    }
-  ]);
-  
-  const playlists = ref([
-    { id: 1, name: '活力四射', songCount: 15, bgColor: 'bg-gradient-to-tr from-yellow-400 to-orange-500' },
-    { id: 2, name: '欢乐时光', songCount: 18, bgColor: 'bg-gradient-to-tr from-pink-400 to-purple-500' },
-    { id: 3, name: '轻松一刻', songCount: 12, bgColor: 'bg-gradient-to-tr from-green-400 to-blue-500' },
-    { id: 4, name: '热门流行', songCount: 20, bgColor: 'bg-gradient-to-tr from-blue-400 to-indigo-500' }
-  ]);
-  
-  // 播放器状态
-  const currentlyPlaying = ref(null);
-  const isPlaying = ref(false);
-  const currentTime = ref(0);
-  const progress = ref(0);
-  let timer = null;
-  
-  // 当前播放曲目
-  const currentTrack = computed(() => {
-    if (!currentlyPlaying.value) return null;
-    return songs.value.find(song => song.id === currentlyPlaying.value);
-  });
-  
-  // 播放歌曲
-  const playSong = (song) => {
-    if (currentlyPlaying.value === song.id) {
-      // 切换播放暂停
-      isPlaying.value = !isPlaying.value;
-    } else {
-      // 播放新歌曲
-      currentlyPlaying.value = song.id;
+  </main-layout>
+</template>
+
+<script>
+// 引入 MainLayout 布局组件
+import MainLayout from '@/layouts/MainLayout.vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+
+export default {
+  name: 'MusicTherapyPage',
+  components: {
+    MainLayout // 注册 MainLayout 组件
+  },
+  setup() {
+    const emotion = ref('快乐');
+    
+    // 音乐数据（实际项目中通常从API获取）
+    const songs = ref([
+      { 
+        id: 1, 
+        title: '阳光灿烂的日子', 
+        artist: '周杰伦', 
+        duration: '3:45',
+        bgColor: 'bg-gradient-to-r from-yellow-400 to-yellow-600',
+        isFavorite: false
+      },
+      { 
+        id: 2, 
+        title: 'Happy', 
+        artist: 'Pharrell Williams', 
+        duration: '3:53',
+        bgColor: 'bg-gradient-to-r from-yellow-300 to-orange-500',
+        isFavorite: true
+      },
+      { 
+        id: 3, 
+        title: 'Uptown Funk', 
+        artist: 'Mark Ronson ft. Bruno Mars', 
+        duration: '4:30',
+        bgColor: 'bg-gradient-to-r from-orange-400 to-pink-500',
+        isFavorite: false
+      }
+    ]);
+    
+    const playlists = ref([
+      { id: 1, name: '活力四射', songCount: 15, bgColor: 'bg-gradient-to-tr from-yellow-400 to-orange-500' },
+      { id: 2, name: '欢乐时光', songCount: 18, bgColor: 'bg-gradient-to-tr from-pink-400 to-purple-500' },
+      { id: 3, name: '轻松一刻', songCount: 12, bgColor: 'bg-gradient-to-tr from-green-400 to-blue-500' },
+      { id: 4, name: '热门流行', songCount: 20, bgColor: 'bg-gradient-to-tr from-blue-400 to-indigo-500' }
+    ]);
+    
+    // 播放器状态
+    const currentlyPlaying = ref(null);
+    const isPlaying = ref(false);
+    const currentTime = ref(0);
+    const progress = ref(0);
+    let timer = null;
+    
+    // 当前播放曲目
+    const currentTrack = computed(() => {
+      if (!currentlyPlaying.value) return null;
+      return songs.value.find(song => song.id === currentlyPlaying.value);
+    });
+    
+    // 播放歌曲
+    const playSong = (song) => {
+      if (currentlyPlaying.value === song.id) {
+        // 切换播放暂停
+        isPlaying.value = !isPlaying.value;
+      } else {
+        // 播放新歌曲
+        currentlyPlaying.value = song.id;
+        currentTime.value = 0;
+        progress.value = 0;
+        isPlaying.value = true;
+      }
+    };
+    
+    // 切换收藏状态
+    const toggleFavorite = (songId) => {
+      const song = songs.value.find(s => s.id === songId);
+      if (song) {
+        song.isFavorite = !song.isFavorite;
+      }
+    };
+    
+    // 添加到播放列表
+    const addToPlaylist = (songId) => {
+      // 实际项目中可以添加一个弹窗让用户选择播放列表
+      alert(`已添加到播放列表！`);
+    };
+    
+    // 播放控制功能
+    const togglePlay = () => {
+      if (currentlyPlaying.value) {
+        isPlaying.value = !isPlaying.value;
+      } else if (songs.value.length > 0) {
+        // 如果没有当前播放的歌曲，选择第一首
+        currentlyPlaying.value = songs.value[0].id;
+        isPlaying.value = true;
+      }
+    };
+    
+    const prevSong = () => {
+      if (!currentlyPlaying.value || songs.value.length <= 1) return;
+      
+      const currentIndex = songs.value.findIndex(s => s.id === currentlyPlaying.value);
+      const prevIndex = (currentIndex - 1 + songs.value.length) % songs.value.length;
+      currentlyPlaying.value = songs.value[prevIndex].id;
       currentTime.value = 0;
       progress.value = 0;
-      isPlaying.value = true;
-    }
-  };
-  
-  // 切换收藏状态
-  const toggleFavorite = (songId) => {
-    const song = songs.value.find(s => s.id === songId);
-    if (song) {
-      song.isFavorite = !song.isFavorite;
-    }
-  };
-  
-  // 添加到播放列表
-  const addToPlaylist = (songId) => {
-    // 实际项目中可以添加一个弹窗让用户选择播放列表
-    alert(`已添加到播放列表！`);
-  };
-  
-  // 播放控制功能
-  const togglePlay = () => {
-    if (currentlyPlaying.value) {
-      isPlaying.value = !isPlaying.value;
-    } else if (songs.value.length > 0) {
-      // 如果没有当前播放的歌曲，选择第一首
-      currentlyPlaying.value = songs.value[0].id;
-      isPlaying.value = true;
-    }
-  };
-  
-  const prevSong = () => {
-    if (!currentlyPlaying.value || songs.value.length <= 1) return;
+    };
     
-    const currentIndex = songs.value.findIndex(s => s.id === currentlyPlaying.value);
-    const prevIndex = (currentIndex - 1 + songs.value.length) % songs.value.length;
-    currentlyPlaying.value = songs.value[prevIndex].id;
-    currentTime.value = 0;
-    progress.value = 0;
-  };
-  
-  const nextSong = () => {
-    if (!currentlyPlaying.value && songs.value.length > 0) {
-      currentlyPlaying.value = songs.value[0].id;
-      isPlaying.value = true;
-      return;
-    }
+    const nextSong = () => {
+      if (!currentlyPlaying.value && songs.value.length > 0) {
+        currentlyPlaying.value = songs.value[0].id;
+        isPlaying.value = true;
+        return;
+      }
+      
+      if (songs.value.length <= 1) return;
+      
+      const currentIndex = songs.value.findIndex(s => s.id === currentlyPlaying.value);
+      const nextIndex = (currentIndex + 1) % songs.value.length;
+      currentlyPlaying.value = songs.value[nextIndex].id;
+      currentTime.value = 0;
+      progress.value = 0;
+    };
     
-    if (songs.value.length <= 1) return;
+    // 格式化时间
+    const formatTime = (seconds) => {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs < 10 ? '0' + secs : secs}`;
+    };
     
-    const currentIndex = songs.value.findIndex(s => s.id === currentlyPlaying.value);
-    const nextIndex = (currentIndex + 1) % songs.value.length;
-    currentlyPlaying.value = songs.value[nextIndex].id;
-    currentTime.value = 0;
-    progress.value = 0;
-  };
-  
-  // 格式化时间
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs < 10 ? '0' + secs : secs}`;
-  };
-  
-  // 模拟播放进度
-  watch(isPlaying, (newValue) => {
-    if (newValue && currentlyPlaying.value) {
-      // 开始计时
-      clearInterval(timer);
-      timer = setInterval(() => {
-        if (currentTrack.value) {
-          const totalDuration = parseInt(currentTrack.value.duration.split(':')[0]) * 60 + 
-                               parseInt(currentTrack.value.duration.split(':')[1]);
-          
-          currentTime.value += 1;
-          progress.value = (currentTime.value / totalDuration) * 100;
-          
-          // 当歌曲播放完毕
-          if (currentTime.value >= totalDuration) {
-            nextSong();
+    // 模拟播放进度
+    watch(isPlaying, (newValue) => {
+      if (newValue && currentlyPlaying.value) {
+        // 开始计时
+        clearInterval(timer);
+        timer = setInterval(() => {
+          if (currentTrack.value) {
+            const totalDuration = parseInt(currentTrack.value.duration.split(':')[0]) * 60 + 
+                                parseInt(currentTrack.value.duration.split(':')[1]);
+            
+            currentTime.value += 1;
+            progress.value = (currentTime.value / totalDuration) * 100;
+            
+            // 当歌曲播放完毕
+            if (currentTime.value >= totalDuration) {
+              nextSong();
+            }
           }
-        }
-      }, 1000);
-    } else {
-      // 停止计时
+        }, 1000);
+      } else {
+        // 停止计时
+        clearInterval(timer);
+      }
+    });
+    
+    onMounted(() => {
+      // 可以在这里加载歌曲数据或根据emotion获取推荐
+    });
+    
+    onUnmounted(() => {
       clearInterval(timer);
-    }
-  });
-  
-  onMounted(() => {
-    // 可以在这里加载歌曲数据或根据emotion获取推荐
-  });
-  
-  onUnmounted(() => {
-    clearInterval(timer);
-  });
-  
-  // 当emotion改变时，可以刷新音乐推荐
-  watch(() => props.emotion, (newEmotion) => {
-    // 实际项目中，这里可以调用API获取基于情绪的推荐
-    console.log(`情绪改变为: ${newEmotion}，更新音乐推荐`);
-  });
-  </script>
-  
-  <style scoped>
-  .scale-animation {
-    transition: transform 0.3s ease-in-out;
+    });
+    
+    // 当emotion改变时，可以刷新音乐推荐
+    watch(emotion, (newEmotion) => {
+      // 实际项目中，这里可以调用API获取基于情绪的推荐
+      console.log(`情绪改变为: ${newEmotion}，更新音乐推荐`);
+    });
+
+    return {
+      emotion,
+      songs,
+      playlists,
+      currentlyPlaying,
+      isPlaying,
+      currentTime,
+      progress,
+      currentTrack,
+      playSong,
+      toggleFavorite,
+      addToPlaylist,
+      togglePlay,
+      prevSong,
+      nextSong,
+      formatTime
+    };
   }
-  
-  .scale-animation:hover {
-    transform: scale(1.03);
-  }
-  
-  .primary-100 {
-    background-color: rgba(93, 92, 222, 0.1);
-  }
-  
-  .primary-600 {
-    color: #5D5CDE;
-  }
-  
-  .primary-700 {
-    color: #4847B8;
-  }
-  
-  .bg-primary-600 {
-    background-color: #5D5CDE;
-  }
-  
-  .bg-primary-700 {
-    background-color: #4847B8;
-  }
-  
-  .bg-primary-900 {
-    background-color: rgba(93, 92, 222, 0.2);
-  }
-  </style>
+}
+</script>
+
+<style scoped>
+.scale-animation {
+  transition: transform 0.3s ease-in-out;
+}
+
+.scale-animation:hover {
+  transform: scale(1.03);
+}
+
+.primary-100 {
+  background-color: rgba(93, 92, 222, 0.1);
+}
+
+.primary-600 {
+  color: #5D5CDE;
+}
+
+.primary-700 {
+  color: #4847B8;
+}
+
+.bg-primary-600 {
+  background-color: #5D5CDE;
+}
+
+.bg-primary-700 {
+  background-color: #4847B8;
+}
+
+.bg-primary-900 {
+  background-color: rgba(93, 92, 222, 0.2);
+}
+</style>
