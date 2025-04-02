@@ -18,7 +18,7 @@
 				@prev-song="prevSong"
 				@next-song="nextSong"
 			/>
-			<PlaylistSection :emotion="emotion" :playlists="playlists" />
+			<LikedSongsSection :likedSongs="likedSongs" />
 		</div>
 	</main-layout>
 </template>
@@ -27,7 +27,7 @@
 import MainLayout from '/@/layouts/MainLayout.vue';
 import MoodRecommendation from '/@/views/music/components/MoodRecommendation.vue';
 import MusicPlayer from '/@/views/music/components/MusicPlayer.vue';
-import PlaylistSection from '/@/views/music/components/PlaylistSection.vue';
+import LikedSongsSection from '/@/views/music/components/PlaylistSection.vue';
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 
 export default {
@@ -36,7 +36,7 @@ export default {
 		MainLayout,
 		MoodRecommendation,
 		MusicPlayer,
-		PlaylistSection
+		LikedSongsSection
 	},
 	setup() {
 		const emotion = ref('快乐');
@@ -68,30 +68,27 @@ export default {
 			}
 		]);
 
-		const playlists = ref([
+		const likedSongs = ref([
 			{
 				id: 1,
-				name: '活力四射',
-				songCount: 15,
-				bgColor: 'bg-gradient-to-tr from-yellow-400 to-orange-500'
+				title: '阳光灿烂的日子',
+				artist: '周杰伦',
+				duration: '3:45',
+				bgColor: 'bg-gradient-to-r from-yellow-400 to-yellow-600'
 			},
 			{
 				id: 2,
-				name: '欢乐时光',
-				songCount: 18,
-				bgColor: 'bg-gradient-to-tr from-pink-400 to-purple-500'
+				title: 'Happy',
+				artist: 'Pharrell Williams',
+				duration: '3:53',
+				bgColor: 'bg-gradient-to-r from-yellow-300 to-orange-500'
 			},
 			{
 				id: 3,
-				name: '轻松一刻',
-				songCount: 12,
-				bgColor: 'bg-gradient-to-tr from-green-400 to-blue-500'
-			},
-			{
-				id: 4,
-				name: '热门流行',
-				songCount: 20,
-				bgColor: 'bg-gradient-to-tr from-blue-400 to-indigo-500'
+				title: 'Uptown Funk',
+				artist: 'Mark Ronson ft. Bruno Mars',
+				duration: '4:30',
+				bgColor: 'bg-gradient-to-r from-orange-400 to-pink-500'
 			}
 		]);
 
@@ -209,7 +206,7 @@ export default {
 		return {
 			emotion,
 			songs,
-			playlists,
+			likedSongs,
 			currentlyPlaying,
 			isPlaying,
 			currentTime,

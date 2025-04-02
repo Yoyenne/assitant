@@ -44,7 +44,7 @@
         placeholder="邮箱地址"
       />
       <button class="form__button button submit" @click.prevent="submitForgotPassword">
-        提交
+        发送验证码
       </button>
       <a class="form__link" @click.prevent="toggleForgotPassword">返回登录</a>
     </form>

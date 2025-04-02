@@ -133,8 +133,8 @@ $transition-normal: all 0.3s ease;
 // 图片上传区域特定样式
 #image-upload-section {
   background-color: $secondary-color;
-  position: relative;
-  
+  position: relative; /* 设置容器为相对定位 */
+
   // 文件输入框样式
   .upload-input {
     position: absolute;
@@ -144,12 +144,12 @@ $transition-normal: all 0.3s ease;
     overflow: hidden;
     z-index: -1;
   }
-  
+
   // 自定义上传按钮
   .custom-file-upload {
     display: inline-block;
     background-color: $primary-color;
-    color:white;
+    color: white;
     padding: 0.5rem 1rem; /* 缩小内边距 */
     border-radius: $border-radius-sm;
     cursor: pointer;
@@ -157,10 +157,39 @@ $transition-normal: all 0.3s ease;
     font-weight: 500;
     font-size: 0.9rem; /* 缩小字体大小 */
     border: 2px solid $primary-light;
-    
+
     &:hover {
       background-color: #748bf3;
       color: white;
+    }
+  }
+
+  // 提交按钮样式
+  .submit-button {
+    position: absolute; /* 绝对定位 */
+    bottom: 1rem; /* 距离容器底部 1rem */
+    right: 1rem; /* 距离容器右侧 1rem */
+    background: linear-gradient(135deg, $primary-color 0%, $primary-light 100%);
+    color: white;
+    border: none;
+    border-radius: $border-radius-md;
+    padding: 0.5rem 1rem; /* 缩小内边距 */
+    font-size: 0.9rem; /* 缩小字体大小 */
+    font-weight: 500; /* 调整字体粗细 */
+    cursor: pointer;
+    transition: $transition-normal;
+    box-shadow: 0 2px 5px rgba(122, 94, 248, 0.2); /* 减小阴影效果 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      transform: translateY(-1px); /* 减小悬停时的移动距离 */
+      box-shadow: 0 4px 10px rgba(122, 94, 248, 0.3); /* 减小悬停时的阴影 */
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 }
@@ -235,20 +264,20 @@ $transition-normal: all 0.3s ease;
   color: white;
   border: none;
   border-radius: $border-radius-md;
-  padding: 0.9rem 2.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
+  padding: 0.5rem 1rem; /* 缩小内边距 */
+  font-size: 0.9rem; /* 缩小字体大小 */
+  font-weight: 500; /* 调整字体粗细 */
   cursor: pointer;
   transition: $transition-normal;
-  box-shadow: 0 4px 10px rgba(122, 94, 248, 0.3);
+  box-shadow: 0 2px 5px rgba(122, 94, 248, 0.2); /* 减小阴影效果 */
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 150px;
+  min-width: 120px; /* 缩小最小宽度 */
   
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(122, 94, 248, 0.4);
+    transform: translateY(-1px); /* 减小悬停时的移动距离 */
+    box-shadow: 0 4px 10px rgba(122, 94, 248, 0.3); /* 减小悬停时的阴影 */
   }
   
   &:active {

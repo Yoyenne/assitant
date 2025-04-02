@@ -11,6 +11,7 @@
       </div>
       <span class="form__span">此刻你的心空是什么天气呢？</span>
       <input class="form__input" type="text" placeholder="用户名" />
+      <input class="form__input" type="email" placeholder="邮箱" />
       <input class="form__input" type="password" placeholder="密码" />
       <button class="form__button button submit">注册</button>
     </form>
