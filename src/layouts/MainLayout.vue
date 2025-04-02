@@ -164,8 +164,8 @@ export default {
       isMobileMenuOpen: false,
       isProfileMenuOpen: false,
       navigationItems: [
-        { name: '个性推荐', href: '/recommendations' },
-        { name: '问卷测评', href: '/assessment' },
+        { name: '个性推荐', href: '/music' },
+        { name: '问卷测评', href: '/question' },
         { name: '心声社区', href: '/community' },
         { name: '心情日记', href: '/diary' },
         { name: '正念辅助', href: '/mindfulness' }
