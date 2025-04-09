@@ -1,7 +1,7 @@
 /*
  *  UserMusicController 用户音乐相关接口
  */
-import { getRequest, postRequest } from '../lib/axios';
+import { smartAxios, getRequest, postRequest } from '../lib/axios';
 
 export const musicApi = {
     /**
@@ -14,8 +14,15 @@ export const musicApi = {
     /**
      * 根据图片获取推荐歌曲
      */
-    recommendByImage: (param: any) => {
-        return postRequest('/user/music/recommendByImage', param);
+    recommendByImage: (file: File) => {
+        const formData = new FormData();
+        formData.append("image", file);
+    
+        return smartAxios.post('/user/music/recommendByImage', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
     },
 
     /**

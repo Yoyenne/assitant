@@ -10,7 +10,7 @@ import { localRead, localClear } from '../utils/local-util';
 const TOKEN_HEADER = 'Authorization';
 
 // 创建axios对象
-const smartAxios = axios.create({
+export const smartAxios = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
 });
 

@@ -11,20 +11,8 @@
         <img class="form__icon" src="../../../assets/images/angery.png" />
       </div>
       <span class="form__span">此刻你的心空是什么天气呢？</span>
-      <input
-        v-model="loginFrom.username"
-        class="form__input"
-        type="text"
-        autocomplete="on"
-        placeholder="用户名"
-      />
-      <input
-        v-model.lazy="loginFrom.password"
-        class="form__input"
-        type="password"
-        autocomplete="on"
-        placeholder="密码"
-      />
+      <input v-model="loginFrom.username" class="form__input" type="text" autocomplete="on" placeholder="用户名" />
+      <input v-model.lazy="loginFrom.password" class="form__input" type="password" autocomplete="on" placeholder="密码" />
       <a class="form__link" @click.prevent="toggleForgotPassword">忘记密码？</a>
       <button class="form__button button" @click="toLogin">登录</button>
     </div>
@@ -33,18 +21,8 @@
     <div v-else-if="showForgotPassword" id="forgot-password-form" class="form">
       <h2 class="form_title title">找回密码</h2>
       <span class="form__span">请输入您的用户名和邮箱地址</span>
-      <input
-        v-model="forgotPasswordForm.username"
-        class="form__input"
-        type="text"
-        placeholder="用户名"
-      />
-      <input
-        v-model="forgotPasswordForm.email"
-        class="form__input"
-        type="email"
-        placeholder="邮箱地址"
-      />
+      <input v-model="forgotPasswordForm.username" class="form__input" type="text" placeholder="用户名" />
+      <input v-model="forgotPasswordForm.email" class="form__input" type="email" placeholder="邮箱地址" />
       <button class="form__button button" @click.prevent="submitForgotPassword">
         发送验证码
       </button>
@@ -55,30 +33,10 @@
     <form v-else id="reset-password-form" class="form" method="" action="">
       <h2 class="form_title title">修改密码</h2>
       <span class="form__span">请输入以下信息以重置密码</span>
-      <input
-        v-model="resetPasswordForm.username"
-        class="form__input"
-        type="text"
-        placeholder="用户名"
-      />
-      <input
-        v-model="resetPasswordForm.email"
-        class="form__input"
-        type="email"
-        placeholder="邮箱地址"
-      />
-      <input
-        v-model="resetPasswordForm.code"
-        class="form__input"
-        type="text"
-        placeholder="验证码"
-      />
-      <input
-        v-model="resetPasswordForm.newPassword"
-        class="form__input"
-        type="password"
-        placeholder="新密码"
-      />
+      <input v-model="resetPasswordForm.username" class="form__input" type="text" placeholder="用户名" />
+      <input v-model="resetPasswordForm.email" class="form__input" type="email" placeholder="邮箱地址" />
+      <input v-model="resetPasswordForm.code" class="form__input" type="text" placeholder="验证码" />
+      <input v-model="resetPasswordForm.newPassword" class="form__input" type="password" placeholder="新密码" />
       <button class="form__button button submit" @click.prevent="submitResetPassword">
         确认修改
       </button>
@@ -145,7 +103,7 @@ const submitForgotPassword = async () => {
     alert('请输入用户名和邮箱地址！')
     return
   }
-  const res:any = await loginApi.forgetpassword(forgotPasswordForm.value);
+  const res: any = await loginApi.forgetpassword(forgotPasswordForm.value);
   // 模拟发送验证码逻辑
   alert(`验证码已发送到邮箱 ${email}，请查收！`)
   // 切换到修改密码界面
@@ -163,7 +121,7 @@ const submitResetPassword = async () => {
     alert('请完整填写所有信息！')
     return
   }
-  const res:any = await loginApi.changepassword(resetPasswordForm.value);
+  const res: any = await loginApi.changepassword(resetPasswordForm.value);
   // 模拟修改密码逻辑
   alert(`密码已成功修改！用户名：${username}`)
   // 重置表单并返回登录界面
@@ -175,15 +133,15 @@ const submitResetPassword = async () => {
 }
 
 const toLogin = async () => {
-  if(!loginFrom.value.username){
-      message.error('用户名不能为空');
-      return
-    }
-    if(!loginFrom.value.password){
-      message.error('密码不能为空');
-      return
-    }
-  const res:any = await loginApi.login(loginFrom.value);
+  if (!loginFrom.value.username) {
+    message.error('用户名不能为空');
+    return
+  }
+  if (!loginFrom.value.password) {
+    message.error('密码不能为空');
+    return
+  }
+  const res: any = await loginApi.login(loginFrom.value);
   localSave('USER_TOKEN', res.token ? res.token : '');
   router.push('/wordcloud');
 }
