@@ -38,9 +38,9 @@
 				>
 					<i class="fas fa-music text-white text-3xl"></i>
 				</div>
-				<h4 class="font-medium text-sm">{{ song.title }}</h4>
+				<h4 class="font-medium text-sm">{{ song.songName }}</h4>
 				<p class="text-gray-500 dark:text-gray-400 text-xs mt-1">
-					{{ song.artist }}
+					{{ song.singer }}
 				</p>
 				<p class="text-gray-500 dark:text-gray-400 text-xs mt-1">
 					时长：{{ song.duration }}

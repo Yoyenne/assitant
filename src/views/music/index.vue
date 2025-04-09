@@ -2,7 +2,8 @@
 	<main-layout page-title="音乐疗愈">
 		<div class="space-y-8">
 			<MoodRecommendation :emotion="emotion" :songs="songs" :currentlyPlaying="currentlyPlaying"
-				@play-song="playSong" @toggle-favorite="toggleFavorite" @add-to-playlist="addToPlaylist" @likeSong="likeSong" />
+				@play-song="playSong" @toggle-favorite="toggleFavorite" @add-to-playlist="addToPlaylist"
+				@likeSong="likeSong" />
 			<MusicPlayer :currentTrack="currentTrack" :isPlaying="isPlaying" :currentTime="currentTime"
 				:progress="progress" @toggle-play="togglePlay" @prev-song="prevSong" @next-song="nextSong" />
 			<LikedSongsSection :likedSongs="likedSongs" />
@@ -34,7 +35,7 @@ export default {
 		);
 
 		const likedSongs = ref(
-	);
+		);
 
 		const currentlyPlaying = ref(null);
 		const isPlaying = ref(false);
@@ -137,7 +138,7 @@ export default {
 			}
 		});
 
-		
+
 
 		onUnmounted(() => {
 			clearInterval(timer);
@@ -148,32 +149,30 @@ export default {
 		});
 
 
-		
+
 
 		const getTextMusic = (val) => {
 			musicApi.recommend({
 				text: val
 			}).then((result) => {
 				songs.value = result.recommended_songs;
-				emotion.value = result.emotion?result.emotion[0]:''
+				emotion.value = result.emotion ? result.emotion[0] : ''
 			});
 		}
 
 		const getImageMusic = (val) => {
-			musicApi.recommendByImage({
-				image: val
-			}).then((result) => {
+			musicApi.recommendByImage(val).then((result) => {
 				songs.value = result.recommended_songs;
-				emotion.value = result.emotion?result.emotion[0]:''
+				emotion.value = result.emotion ? result.emotion[0] : '';
 			});
-		}
+		};
 
 		const getEmotionMusic = (val) => {
 			musicApi.recommendByEmotion({
 				emotion: val
 			}).then((result) => {
 				songs.value = result.recommended_songs;
-				emotion.value = result.emotion?result.emotion[0]:''
+				emotion.value = result.emotion ? result.emotion[0] : ''
 			});
 		}
 
@@ -189,7 +188,7 @@ export default {
 
 		const getLikeList = () => {
 			musicApi.userLike().then((result) => {
-				likedSongs.value = result;
+				likedSongs.value = result.music;
 			});
 		}
 
@@ -204,7 +203,7 @@ export default {
 			});
 		}
 
-		onMounted(() => {getLikeList() });
+		onMounted(() => { getLikeList() });
 
 
 		return {

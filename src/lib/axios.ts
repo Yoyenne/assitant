@@ -10,7 +10,7 @@ import { localRead, localClear } from '../utils/local-util';
 const TOKEN_HEADER = 'Authorization';
 
 // 创建axios对象
-const smartAxios = axios.create({
+export const smartAxios = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
 });
 
@@ -76,8 +76,8 @@ smartAxios.interceptors.response.use(
         if(error.response && error.response.data.message){
             message.error(error.response.data.message);
         }else{
-            setTimeout(logout, 300);
-            message.error('网络连接错误');
+            // setTimeout(logout, 300);
+            message.error(error.message);
         }
         // setTimeout(logout, 300);
         // if (error.message.indexOf('timeout') !== -1) {
