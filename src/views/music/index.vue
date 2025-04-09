@@ -189,7 +189,7 @@ export default {
 
 		const getLikeList = () => {
 			musicApi.userLike().then((result) => {
-				likedSongs.value = result;
+				likedSongs.value = result.music;
 			});
 		}
 

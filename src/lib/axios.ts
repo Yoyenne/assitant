@@ -76,8 +76,8 @@ smartAxios.interceptors.response.use(
         if(error.response && error.response.data.message){
             message.error(error.response.data.message);
         }else{
-            setTimeout(logout, 300);
-            message.error('网络连接错误');
+            // setTimeout(logout, 300);
+            message.error(error.message);
         }
         // setTimeout(logout, 300);
         // if (error.message.indexOf('timeout') !== -1) {
