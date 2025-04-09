@@ -95,16 +95,16 @@
 					>
 						<input
 							type="radio"
-							:id="emotion"
-							:value="emotion"
+							:id="emotion.emotion"
+							:value="emotion.emotion"
 							v-model="selectedEmotion"
 							class="form-radio text-primary-600 focus:ring-primary-500"
 						/>
 						<label
-							:for="emotion"
+							:for="emotion.emotion"
 							class="text-gray-700 dark:text-gray-300 cursor-pointer"
 						>
-							{{ emotion }}
+							{{ emotion.name }}
 						</label>
 					</div>
 				</div>
@@ -122,6 +122,8 @@
 </template>
 
 <script>
+import { keywords } from '/@/data/index';
+import { useMusicStore } from '/@/store/modules/music';
 export default {
 	name: 'MusicPlayer',
 	props: {
@@ -149,29 +151,30 @@ export default {
 	data() {
 		return {
 			selectedEmotion: this.initialEmotion, // 当前选择的情绪
-			emotions: [
-				'快乐',
-				'愤怒',
-				'羞',
-				'安心',
-				'悲伤',
-				'烦闷',
-				'尊敬',
-				'失望',
-				'憎恶',
-				'赞扬',
-				'疚',
-				'贬责',
-				'相信',
-				'思',
-				'妒忌',
-				'喜爱',
-				'慌',
-				'怀疑',
-				'祝愿',
-				'恐惧',
-				'惊奇'
-			] // 情绪列表
+			emotions: keywords,
+			// [
+			// 	'快乐',
+			// 	'愤怒',
+			// 	'羞',
+			// 	'安心',
+			// 	'悲伤',
+			// 	'烦闷',
+			// 	'尊敬',
+			// 	'失望',
+			// 	'憎恶',
+			// 	'赞扬',
+			// 	'疚',
+			// 	'贬责',
+			// 	'相信',
+			// 	'思',
+			// 	'妒忌',
+			// 	'喜爱',
+			// 	'慌',
+			// 	'怀疑',
+			// 	'祝愿',
+			// 	'恐惧',
+			// 	'惊奇'
+			// ] // 情绪列表
 		};
 	},
 	methods: {
@@ -181,12 +184,13 @@ export default {
 			return `${mins}:${secs < 10 ? '0' + secs : secs}`;
 		},
 		selectEmotion(emotion) {
-			this.selectedEmotion = emotion; // 更新选中的情绪
+			this.selectedEmotion = emotion.emotion; // 更新选中的情绪
 		},
 		submitEmotion() {
 			// 触发事件，将选择的情绪传递给父组件
-			this.$emit('emotion-selected', this.selectedEmotion);
-			alert(`您选择的心情是：${this.selectedEmotion}`);
+			// this.$emit('emotion-selected', this.selectedEmotion);
+			// alert(`您选择的心情是：${this.selectedEmotion}`);
+			useMusicStore().setMusicInfo('emotion', this.selectedEmotion);
 		}
 	}
 };

@@ -73,11 +73,14 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue';
+import { useMusicStore } from '/@/store/modules/music';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
 	name: 'Search',
 	emits: ['submit-image', 'submit-text'],
 	setup(_, { emit }) {
+		const router = useRouter();
 		const imageFile = ref<File | null>(null); // 存储上传的图片文件
 		const imagePreview = ref<string | null>(null); // 存储图片预览URL
 		const textContent = ref(''); // 存储上传的文字内容
@@ -143,10 +146,14 @@ export default defineComponent({
 				return;
 			}
 
-			// 触发提交事件，将图片传递给父组件
-			emit('submit-image', {
-				image: imageFile.value
-			});
+			// // 触发提交事件，将图片传递给父组件
+			// emit('submit-image', {
+			// 	image: imageFile.value
+			// });
+
+			useMusicStore().setMusicInfo('image', imageFile.value);
+
+			router.push('/music');
 
 			// 清空图片内容
 			imageFile.value = null;
@@ -161,16 +168,21 @@ export default defineComponent({
 				return;
 			}
 
-			// 触发提交事件，将文字内容传递给父组件
-			emit('submit-text', {
-				text: textContent.value
-			});
+			useMusicStore().setMusicInfo('text', textContent.value);
 
-			// 清空文字内容
-			textContent.value = '';
+			router.push('/music');
+
+			// // 触发提交事件，将文字内容传递给父组件
+			// emit('submit-text', {
+			// 	text: textContent.value
+			// });
+
+			// // 清空文字内容
+			// textContent.value = '';
 		};
 
 		onMounted(() => {
+			sessionStorage.clear();
 			startCarousel(); // 开始轮播
 		});
 
