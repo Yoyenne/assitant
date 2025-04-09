@@ -1,0 +1,224 @@
+// 主容器样式
+.emotion-recommendation {
+    position: relative;
+    z-index: 1;
+    background-color: #f8fafc;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+
+    // 自定义滚动条
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #bfdbfe;
+        border-radius: 4px;
+
+        &:hover {
+            background-color: #93c5fd;
+        }
+    }
+}
+
+// 卡片动画效果
+.scale-animation {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+        transform: translateY(-4px) scale(1.01);
+    }
+}
+
+// 动画关键帧
+@keyframes gentle-pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+// 应用动画
+.animate-pulse {
+    animation: gentle-pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+// 歌曲卡片样式变量
+$card-border-radius: 1rem;
+$card-padding: 1.5rem;
+$card-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
+$card-hover-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1);
+
+// 基础颜色变量
+$primary-light: #eff6ff; // blue-50
+$primary-medium: #93c5fd; // blue-300
+$primary-dark: #1e40af; // blue-800
+$text-primary: #1e40af; // blue-800
+$text-secondary: #3b82f6; // blue-500
+$text-muted: #60a5fa; // blue-400
+$heart-active: #f87171; // red-400
+
+// 卡片颜色变体 - 更明显的蓝色系变化
+$card-variants: (
+    // 蓝色系
+    1: (
+        bg: #edf5ff,
+        accent: #3b82f6,
+        shadow: rgba(59, 130, 246, 0.18),
+        gradient: linear-gradient(135deg, #dbeafe, #bfdbfe)
+    ),
+    // 天蓝色系
+    2: (
+        bg: #e0f7ff,
+        accent: #0ea5e9,
+        shadow: rgba(14, 165, 233, 0.18),
+        gradient: linear-gradient(135deg, #e0f7ff, #bae6fd)
+    ),
+    // 靛蓝色系
+    3: (
+        bg: #eef2ff,
+        accent: #6366f1,
+        shadow: rgba(99, 102, 241, 0.18),
+        gradient: linear-gradient(135deg, #e0e7ff, #c7d2fe)
+    ),
+    // 紫蓝色系
+    4: (
+        bg: #f3f0ff,
+        accent: #8b5cf6,
+        shadow: rgba(139, 92, 246, 0.18),
+        gradient: linear-gradient(135deg, #ede9fe, #ddd6fe)
+    ),
+    // 深蓝色系
+    5: (
+        bg: #e6f2ff,
+        accent: #1d4ed8,
+        shadow: rgba(29, 78, 216, 0.18),
+        gradient: linear-gradient(135deg, #dbeafe, #93c5fd)
+    )
+);
+
+// 生成卡片变体样式
+@for $i from 1 through 5 {
+    $variant: map-get($card-variants, $i);
+    $bg: map-get($variant, bg);
+    $accent: map-get($variant, accent);
+    $shadow: map-get($variant, shadow);
+    $gradient: map-get($variant, gradient);
+
+    .song-card-variant-#{$i} {
+        background-color: $bg;
+        box-shadow: 0 4px 6px -1px $shadow, 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        border-color: rgba(mix(white, $accent, 50%), 0.3) !important;
+
+        // 顶部音乐图标区域的背景
+        & > div:first-child {
+            background: $gradient !important;
+        }
+
+        // 顶部区域的渐变覆盖
+        & > div:first-child > div:first-child {
+            background: linear-gradient(to bottom right, transparent, rgba(mix(white, $accent, 50%), 0.3)) !important;
+        }
+
+        // 音乐图标颜色
+        .card-accent {
+            color: $accent !important;
+        }
+
+        // 卡片标题和按钮颜色
+        h4.card-accent {
+            color: darken($accent, 10%) !important;
+        }
+
+        // 卡片标签样式
+        .card-tag {
+            background-color: rgba(mix(white, $accent, 70%), 0.6);
+            color: darken($accent, 10%);
+        }
+
+        // 播放/暂停按钮
+        button.card-accent i {
+            color: $accent !important;
+        }
+
+        // 卡片悬浮效果
+        &:hover {
+            box-shadow: 0 10px 15px -3px $shadow, 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: rgba($accent, 0.3) !important;
+        }
+
+        // 进度条样式
+        .card-progressbar {
+            background: linear-gradient(90deg, $accent, lighten($accent, 20%));
+        }
+
+        // "我喜欢"按钮样式
+        .like-button {
+            background-color: rgba(mix(white, $accent, 80%), 0.8) !important;
+            color: darken($accent, 15%) !important;
+            
+            &:hover {
+                background-color: rgba(mix(white, $accent, 70%), 0.9) !important;
+                transform: translateY(-2px);
+            }
+        }
+        
+        // 歌手名称样式
+        p.text-blue-600 {
+            color: mix($accent, #4b5563, 70%) !important;
+        }
+        
+        // 时长样式
+        span.text-blue-400 {
+            color: mix($accent, #9ca3af, 60%) !important;
+        }
+    }
+}
+
+// 按钮样式扩展
+.like-button {
+    background-color: $primary-light;
+    color: $primary-dark;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: lighten($primary-light, 2%);
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+// 响应式布局增强
+@media (max-width: 768px) {
+    .emotion-recommendation {
+        padding: 1.5rem;
+    }
+
+    .scale-animation:hover {
+        transform: translateY(-2px) scale(1.005);
+    }
+}
+
+// 无障碍支持
+@media (prefers-reduced-motion: reduce) {
+    .scale-animation,
+    .scale-animation:hover,
+    .animate-pulse {
+        transition: none;
+        animation: none;
+        transform: none;
+    }
+}
