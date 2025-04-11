@@ -1,0 +1,158 @@
+/* 玩家容器相对定位，以便放置装饰图像 */
+.player-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* 装饰图像样式 */
+  .decoration-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    
+    img {
+      width: 80px;
+      height: auto;
+      opacity: 0.7;
+      transform: rotate(15deg);
+    }
+  }
+  
+  /* 唱片机样式 */
+  .record-player {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  /* 黑胶唱片样式 */
+  .vinyl-disc {
+    width: 180px;
+    height: 180px;
+    background-color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 
+                inset 0 0 0 15px rgba(40, 40, 40, 0.6),
+                inset 0 0 0 25px rgba(60, 60, 60, 0.3),
+                inset 0 0 0 50px rgba(80, 80, 80, 0.2);
+    animation: rotate 8s linear infinite;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at center,
+        transparent 0%,
+        transparent 78%,
+        rgba(255, 255, 255, 0.05) 80%,
+        transparent 100%
+      );
+    }
+  }
+  
+  /* 唱片中心 */
+  .vinyl-center {
+    width: 30px;
+    height: 30px;
+    background-color: #7e7e7e;
+    border-radius: 50%;
+    border: 6px solid #2d2d2d;
+    box-shadow: 0 0 0 2px #444;
+  }
+  
+  /* 旋转动画 */
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* 表单样式 */
+  .form-radio {
+    accent-color: #6b7280;
+    cursor: pointer;
+  }
+  
+  .form-radio:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.2);
+  }
+  
+  label {
+    cursor: pointer;
+  }
+  
+  .grid {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  /* 按钮样式 */
+  button {
+    background: linear-gradient(135deg, #6a5acd, #836fff);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    &:hover {
+      background: linear-gradient(135deg, #836fff, #6a5acd);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  /* 对控制按钮的特殊样式覆盖 */
+  .flex.justify-center.space-x-6 button {
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: none;
+    }
+    
+    &:active {
+      transform: scale(1);
+    }
+  }
+  
+  /* 播放/暂停按钮特殊样式 */
+  .rounded-full.w-12.h-12 {
+    background: linear-gradient(135deg, #6a5acd, #836fff);
+    
+    &:hover {
+      background: linear-gradient(135deg, #836fff, #6a5acd);
+      transform: scale(1.1);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    &:active {
+      transform: scale(1);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
