@@ -1,24 +1,39 @@
 export const keywords = [
-  // 中文词汇
-  { name: '快乐', value: 50000, emotion: 'PA' }, // 高权重，突出显示
-  { name: '安心', value: 40000, emotion: 'PE' },
-  { name: '尊敬', value: 35000, emotion: 'PD' },
-  { name: '赞扬', value: 30000, emotion: 'PH' },
-  { name: '相信', value: 25000, emotion: 'PG' },
-  { name: '喜爱', value: 22000, emotion: 'PB' },
-  { name: '祝愿', value: 20000, emotion: 'PK' },
-  { name: '愤怒', value: 18000, emotion: 'NA'},
-  { name: '疚', value: 30000, emotion: 'NH' },
-  { name: '悲伤', value: 45000, emotion: 'NB' }, // 高权重，突出显示
-  { name: '失望', value: 38000, emotion: 'NJ' },
-  { name: '思', value: 32000, emotion: 'PF' },
-  // { name: '愤怒', value: 28000, emotion: 'NA' },
-  { name: '慌', value: 24000, emotion: 'NI' },
-  { name: '羞', value: 22000, emotion: 'NG' }, // 调整权重
-  { name: '恐惧', value: 20000, emotion: 'NC' }, // 调整权重
-  { name: '烦闷', value: 20000, emotion: 'NE' }, // 调整权重
-  { name: '憎恶', value: 18000, emotion: 'ND' }, // 调整权重
-  { name: '贬责', value: 16000, emotion: 'NN' }, // 调整权重
-  { name: '怀疑', value: 40000, emotion: 'NL' }, // 中高权重
-  { name: '惊奇', value: 30000, emotion: 'PC' },
+	// 中文词汇
+	{ name: '快乐', value: 50000, emotion: 'PA' },
+	{ name: '安心', value: 40000, emotion: 'PE' },
+	{ name: '尊敬', value: 35000, emotion: 'PD' },
+	{ name: '赞扬', value: 30000, emotion: 'PH' },
+	{ name: '相信', value: 29000, emotion: 'PG' },
+	{ name: '喜爱', value: 29000, emotion: 'PB' },
+	{ name: '祝愿', value: 29000, emotion: 'PK' },
+	{ name: '愤怒', value: 35000, emotion: 'NA' },
+	{ name: '疚', value: 30000, emotion: 'NH' },
+	{ name: '悲伤', value: 45000, emotion: 'NB' },
+	{ name: '失望', value: 38000, emotion: 'NJ' },
+	{ name: '思', value: 32000, emotion: 'PF' },
+	{ name: '慌', value: 24000, emotion: 'NI' },
+	{ name: '羞', value: 29000, emotion: 'NG' },
+	{ name: '恐惧', value: 29000, emotion: 'NC' },
+	{ name: '烦闷', value: 28000, emotion: 'NE' },
+	{ name: '憎恶', value: 30000, emotion: 'ND' },
+	{ name: '贬责', value: 30000, emotion: 'NN' },
+	{ name: '怀疑', value: 40000, emotion: 'NL' },
+	{ name: '惊奇', value: 30000, emotion: 'PC' },
+
+	// 英文词汇
+	{ name: 'Happiness', value: 35000, emotion: 'PA' },
+	{ name: 'Calm', value: 35000, emotion: 'PE' },
+	{ name: 'Respect', value: 30000, emotion: 'PD' },
+	{ name: 'Praise', value: 30000, emotion: 'PH' },
+	{ name: 'Trust', value: 29000, emotion: 'PG' },
+	{ name: 'Love', value: 29000, emotion: 'PB' },
+	{ name: 'Wish', value: 28000, emotion: 'PK' },
+	{ name: 'Anger', value: 35000, emotion: 'NA' },
+	{ name: 'Guilt', value: 30000, emotion: 'NH' },
+	{ name: 'Sadness', value: 45000, emotion: 'NB' },
+	{ name: 'Disappointment', value: 38000, emotion: 'NJ' },
+	{ name: 'Fear', value: 29000, emotion: 'NC' },
+	{ name: 'Doubt', value: 40000, emotion: 'NL' },
+	{ name: 'Surprise', value: 30000, emotion: 'PC' }
 ];
