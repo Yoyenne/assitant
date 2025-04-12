@@ -7,15 +7,13 @@
   /* 装饰图像样式 */
   .decoration-image {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 2rem; 
+    right: 0; /* 保持右侧对齐 */
     z-index: 10;
     
     img {
-      width: 80px;
+      width: 5rem; 
       height: auto;
-      opacity: 0.7;
-      transform: rotate(15deg);
     }
   }
   
@@ -155,4 +153,34 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
   }
+
+  /* 只添加新的样式，不修改现有样式 */
+.emotion-option {
+  transition: all 0.2s ease;
+  padding: 10px;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  background-color: rgba(107, 114, 128, 0.1);
   
+  &:hover {
+    background-color: rgba(107, 114, 128, 0.2);
+  }
+  
+  &.selected-emotion {
+    background: rgba(106, 90, 205, 0.15);
+    border-color: #6a5acd;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* 确保按钮样式一致 */
+button[type="submit"],
+button.bg-primary-600 {
+  background: linear-gradient(135deg, #6a5acd, #836fff);
+  
+  &:hover {
+    background: linear-gradient(135deg, #836fff, #6a5acd);
+  }
+}
