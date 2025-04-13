@@ -1,10 +1,12 @@
 <template>
 	<!-- 使用 MainLayout 作为页面的布局 -->
 	<main-layout page-title="心理健康测评">
-		<div>
-			<div class="text-center mb-8">
-				<h3 class="text-xl font-semibold mb-2">心理健康测评</h3>
-				<p class="text-gray-600 dark:text-gray-400">
+		<div class="assessment-container">
+			<div class="text-center mb-10">
+				<h3 class="text-2xl font-bold mb-3 text-primary-700 dark:text-primary-300">
+					心理健康测评
+				</h3>
+				<p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
 					通过科学的测评量表，了解您当前的心理健康状况
 				</p>
 			</div>
@@ -12,23 +14,23 @@
 			<!-- 问卷列表 -->
 			<div
 				v-if="!activeQuestionnaire"
-				class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+				class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
 			>
 				<div
 					v-for="questionnaire in questionnaires"
 					:key="questionnaire.id"
-					class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden scale-animation"
+					class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl overflow-hidden scale-animation border border-gray-100 dark:border-gray-700"
 				>
 					<div
 						:class="[
-							'h-24 flex items-center justify-center',
+							'h-28 flex items-center justify-center',
 							questionnaire.bgColor
 						]"
 					>
-						<i :class="['text-white text-3xl', questionnaire.icon]"></i>
+						<i :class="['text-white text-4xl', questionnaire.icon]"></i>
 					</div>
-					<div class="p-5">
-						<h4 class="font-semibold text-lg mb-1">
+					<div class="p-6">
+						<h4 class="font-bold text-lg mb-2 text-gray-800 dark:text-gray-100">
 							{{ questionnaire.title }}
 						</h4>
 						<p class="text-gray-600 dark:text-gray-400 text-sm mb-3">
@@ -36,14 +38,14 @@
 								questionnaire.timeEstimate
 							}}分钟
 						</p>
-						<p class="text-xs text-gray-500 dark:text-gray-400 mb-4">
+						<p class="text-xs text-gray-500 dark:text-gray-400 mb-5">
 							{{ questionnaire.description }}
 						</p>
 						<button
 							@click="startQuestionnaire(questionnaire.id)"
-							class="w-full py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
+							class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-all duration-300 font-medium flex items-center justify-center shadow-md hover:shadow-lg"
 						>
-							开始测评
+							<i class="fas fa-clipboard-check mr-2"></i> 开始测评
 						</button>
 					</div>
 				</div>
@@ -52,24 +54,24 @@
 			<!-- 进行中的问卷 -->
 			<div
 				v-if="activeQuestionnaire"
-				class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 max-w-3xl mx-auto"
+				class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 max-w-3xl mx-auto border border-gray-100 dark:border-gray-700"
 			>
 				<div class="flex items-center justify-between mb-6">
-					<h3 class="text-xl font-semibold">
+					<h3 class="text-xl font-bold text-primary-700 dark:text-primary-300">
 						{{ currentQuestionnaire.title }}
 					</h3>
 					<button
 						@click="exitQuestionnaire"
-						class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+						class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center transition-colors"
 					>
 						<i class="fas fa-times"></i>
 					</button>
 				</div>
 
 				<!-- 进度条 -->
-				<div class="mb-6">
+				<div class="mb-8">
 					<div
-						class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1"
+						class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2"
 					>
 						<span>测评进度</span>
 						<span
@@ -78,9 +80,9 @@
 							}}</span
 						>
 					</div>
-					<div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+					<div class="h-2.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
 						<div
-							class="h-2 bg-primary-600 rounded-full"
+							class="h-full bg-primary-600 rounded-full transition-all duration-500 ease-in-out"
 							:style="{
 								width: `${
 									((currentQuestionIndex + 1) /
@@ -93,25 +95,25 @@
 				</div>
 
 				<!-- 当前问题 -->
-				<div class="mb-8">
-					<h4 class="text-lg font-medium mb-4">{{ currentQuestion.text }}</h4>
+				<div class="mb-10">
+					<h4 class="text-lg font-medium mb-6 text-gray-800 dark:text-gray-200">{{ currentQuestion.text }}</h4>
 
-					<div class="space-y-3">
+					<div class="space-y-4">
 						<div
 							v-for="(option, index) in currentQuestion.options"
 							:key="index"
 							@click="selectAnswer(index)"
 							:class="[
-								'p-3 rounded-lg cursor-pointer transition-colors',
+								'p-4 rounded-xl cursor-pointer transition-all duration-200',
 								answers[currentQuestionIndex] === index
-									? 'bg-primary-100 border border-primary-600 dark:bg-primary-900 dark:border-primary-400'
-									: 'bg-gray-100 border border-gray-200 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600'
+									? 'bg-primary-50 border-2 border-primary-600 dark:bg-primary-900/40 dark:border-primary-400'
+									: 'bg-gray-50 border-2 border-gray-200 hover:bg-gray-100 dark:bg-gray-700/50 dark:border-gray-600 dark:hover:bg-gray-600/70'
 							]"
 						>
 							<div class="flex items-center">
 								<div
 									:class="[
-										'w-5 h-5 rounded-full border flex items-center justify-center mr-3',
+										'w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 transition-all',
 										answers[currentQuestionIndex] === index
 											? 'border-primary-600 dark:border-primary-400'
 											: 'border-gray-400 dark:border-gray-500'
@@ -119,10 +121,10 @@
 								>
 									<div
 										v-if="answers[currentQuestionIndex] === index"
-										class="w-3 h-3 rounded-full bg-primary-600 dark:bg-primary-400"
+										class="w-3 h-3 rounded-full bg-primary-600 dark:bg-primary-400 animate-scale-in"
 									></div>
 								</div>
-								<span>{{ option.text }}</span>
+								<span class="text-gray-800 dark:text-gray-200">{{ option.text }}</span>
 							</div>
 						</div>
 					</div>
@@ -134,13 +136,13 @@
 						@click="prevQuestion"
 						:disabled="currentQuestionIndex === 0"
 						:class="[
-							'px-4 py-2 rounded-lg transition-colors',
+							'px-6 py-3 rounded-xl transition-all font-medium flex items-center',
 							currentQuestionIndex === 0
-								? 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500'
+								? 'bg-gray-200 text-gray-400 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500'
 								: 'bg-gray-200 hover:bg-gray-300 text-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-300'
 						]"
 					>
-						上一题
+						<i class="fas fa-arrow-left mr-2"></i> 上一题
 					</button>
 
 					<button
@@ -150,13 +152,13 @@
 						@click="nextQuestion"
 						:disabled="answers[currentQuestionIndex] === undefined"
 						:class="[
-							'px-4 py-2 rounded-lg transition-colors',
+							'px-6 py-3 rounded-xl transition-all font-medium flex items-center',
 							answers[currentQuestionIndex] === undefined
-								? 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500'
-								: 'bg-primary-600 hover:bg-primary-700 text-white'
+								? 'bg-gray-200 text-gray-400 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500'
+								: 'bg-primary-600 hover:bg-primary-700 text-white shadow-md hover:shadow-lg'
 						]"
 					>
-						下一题
+						下一题 <i class="fas fa-arrow-right ml-2"></i>
 					</button>
 
 					<button
@@ -164,13 +166,13 @@
 						@click="completeQuestionnaire"
 						:disabled="answers[currentQuestionIndex] === undefined"
 						:class="[
-							'px-4 py-2 rounded-lg transition-colors',
+							'px-6 py-3 rounded-xl transition-all font-medium flex items-center',
 							answers[currentQuestionIndex] === undefined
-								? 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500'
-								: 'bg-green-500 hover:bg-green-600 text-white'
+								? 'bg-gray-200 text-gray-400 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500'
+								: 'bg-green-500 hover:bg-green-600 text-white shadow-md hover:shadow-lg'
 						]"
 					>
-						完成测评
+						<i class="fas fa-check-circle mr-2"></i> 完成测评
 					</button>
 				</div>
 			</div>
@@ -178,26 +180,28 @@
 			<!-- 结果显示模态框 -->
 			<div
 				v-if="showResults"
-				class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
+				class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60 backdrop-blur-sm"
 			>
 				<div
-					class="bg-white dark:bg-gray-800 rounded-xl shadow-xl p-6 max-w-2xl w-full mx-4"
+					class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-0 max-w-2xl w-full mx-4 animate-scale-in"
 				>
-					<div class="flex justify-between items-center mb-4">
-						<h3 class="text-xl font-semibold">测评结果</h3>
-						<button
-							@click="closeResults"
-							class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-						>
-							<i class="fas fa-times"></i>
-						</button>
+					<div class="p-6 border-b border-gray-200 dark:border-gray-700">
+						<div class="flex justify-between items-center">
+							<h3 class="text-xl font-bold text-primary-700 dark:text-primary-300">测评结果</h3>
+							<button
+								@click="closeResults"
+								class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center"
+							>
+								<i class="fas fa-times"></i>
+							</button>
+						</div>
 					</div>
 
-					<div class="mb-6">
-						<div class="flex items-center justify-center mb-4">
+					<div class="p-8">
+						<div class="flex items-center justify-center mb-6">
 							<div
 								:class="[
-									'w-24 h-24 rounded-full flex items-center justify-center text-white text-3xl font-bold',
+									'w-28 h-28 rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-lg',
 									getScoreColor(testScore.score)
 								]"
 							>
@@ -205,130 +209,160 @@
 							</div>
 						</div>
 
-						<h4 class="text-center text-lg font-medium mb-2">
+						<h4 class="text-center text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">
 							{{ testScore.level }}
 						</h4>
-						<p class="text-gray-600 dark:text-gray-400 text-center mb-4">
+						<p class="text-gray-600 dark:text-gray-400 text-center mb-6">
 							{{ testScore.description }}
 						</p>
 
-						<div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-2">
+						<div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full mb-2 overflow-hidden">
 							<div
-								:class="['h-2 rounded-full', getScoreColor(testScore.score)]"
+								:class="['h-full rounded-full', getScoreColor(testScore.score)]"
 								:style="{
 									width: `${(testScore.score / testScore.maxScore) * 100}%`
 								}"
 							></div>
 						</div>
 						<div
-							class="flex justify-between text-xs text-gray-500 dark:text-gray-400"
+							class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-8"
 						>
 							<span>轻微</span>
 							<span>中度</span>
 							<span>严重</span>
 						</div>
-					</div>
 
-					<div class="space-y-4 mb-6">
-						<h4 class="font-medium">建议与应对措施:</h4>
-						<ul
-							class="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-400"
-						>
-							<li
-								v-for="(suggestion, index) in testScore.suggestions"
-								:key="index"
+						<div class="space-y-4 mb-8 bg-gray-50 dark:bg-gray-700/30 p-6 rounded-xl">
+							<h4 class="font-bold text-gray-800 dark:text-gray-200">建议与应对措施:</h4>
+							<ul
+								class="list-disc pl-5 space-y-3 text-gray-600 dark:text-gray-400"
 							>
-								{{ suggestion }}
-							</li>
-						</ul>
+								<li
+									v-for="(suggestion, index) in testScore.suggestions"
+									:key="index"
+								>
+									{{ suggestion }}
+								</li>
+							</ul>
+						</div>
 					</div>
 
-					<div class="flex justify-end space-x-3">
+					<div class="bg-gray-50 dark:bg-gray-700/30 px-6 py-4 rounded-b-2xl flex justify-end space-x-4">
 						<button
 							@click="closeResults"
-							class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-300"
+							class="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl transition-all dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-300 font-medium"
 						>
 							关闭
 						</button>
 						<button
 							@click="saveResults"
-							class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg"
+							class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-all shadow-md hover:shadow-lg font-medium flex items-center"
 						>
-							保存结果
+							<i class="fas fa-save mr-2"></i> 保存结果
 						</button>
 					</div>
 				</div>
 			</div>
 
 			<!-- 历史记录表格 -->
-			<div v-if="!activeQuestionnaire" class="mt-12">
-				<h3 class="text-lg font-semibold mb-4">我的测评记录</h3>
+			<div v-if="!activeQuestionnaire" class="mt-16">
+				<h3 class="text-xl font-bold mb-6 text-primary-700 dark:text-primary-300 flex items-center">
+					<i class="fas fa-history mr-3"></i> 我的测评记录
+				</h3>
 				<div
-					class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden"
+					class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700"
 				>
-					<div class="overflow-x-auto">
+					<div v-if="history.length === 0" class="py-16 text-center">
+						<i
+							class="fas fa-clipboard-list text-6xl text-gray-300 dark:text-gray-600 mb-6"
+						></i>
+						<p class="text-gray-500 dark:text-gray-400 text-xl">暂无测评记录</p>
+					</div>
+
+					<div v-else class="overflow-x-auto">
 						<table class="w-full text-left">
 							<thead>
-								<tr class="bg-gray-100 dark:bg-gray-700">
+								<tr class="bg-primary-50 dark:bg-primary-900/30">
 									<th
-										class="px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300"
+										class="px-6 py-5 text-sm font-bold text-primary-700 dark:text-primary-300 border-b-2 border-primary-200 dark:border-primary-800"
 									>
 										测评名称
 									</th>
 									<th
-										class="px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300"
+										class="px-6 py-5 text-sm font-bold text-primary-700 dark:text-primary-300 border-b-2 border-primary-200 dark:border-primary-800"
 									>
 										完成时间
 									</th>
 									<th
-										class="px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300"
+										class="px-6 py-5 text-sm font-bold text-primary-700 dark:text-primary-300 border-b-2 border-primary-200 dark:border-primary-800"
 									>
 										结果
 									</th>
 									<th
-										class="px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300"
+										class="px-6 py-5 text-sm font-bold text-primary-700 dark:text-primary-300 border-b-2 border-primary-200 dark:border-primary-800"
 									>
 										变化趋势
 									</th>
 									<th
-										class="px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300"
+										class="px-6 py-5 text-sm font-bold text-primary-700 dark:text-primary-300 border-b-2 border-primary-200 dark:border-primary-800"
 									>
 										操作
 									</th>
 								</tr>
 							</thead>
-							<tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+							<tbody>
 								<tr
-									v-for="record in history"
+									v-for="(record, index) in history"
 									:key="record.id"
-									class="hover:bg-gray-50 dark:hover:bg-gray-800/50"
+									:class="[
+										index % 2 === 0
+											? 'bg-white dark:bg-gray-800'
+											: 'bg-gray-50 dark:bg-gray-800/50',
+										'hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors'
+									]"
 								>
-									<td class="px-6 py-4 text-sm">{{ record.title }}</td>
 									<td
-										class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+										class="px-6 py-5 text-sm border-b border-gray-200 dark:border-gray-700"
 									>
-										{{ record.date }}
+										<span class="font-semibold text-gray-800 dark:text-gray-200">{{ record.title }}</span>
 									</td>
-									<td class="px-6 py-4">
+									<td
+										class="px-6 py-5 text-sm text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700"
+									>
+										{{ record.dateTime }}
+									</td>
+									<td
+										class="px-6 py-5 border-b border-gray-200 dark:border-gray-700"
+									>
 										<span
 											:class="[
-												'px-2 py-1 text-xs rounded-full',
+												'px-4 py-2 text-xs font-bold rounded-full shadow-sm',
 												record.levelClass
 											]"
 											>{{ record.level }} ({{ record.score }}分)</span
 										>
 									</td>
-									<td class="px-6 py-4">
-										<span :class="['flex items-center', record.trendClass]">
-											<i :class="record.trendIcon + ' mr-1'"></i>
+									<td
+										class="px-6 py-5 border-b border-gray-200 dark:border-gray-700"
+									>
+										<span
+											:class="[
+												'flex items-center font-medium',
+												record.trendClass
+											]"
+										>
+											<i :class="record.trendIcon + ' mr-2 text-lg'"></i>
 											{{ record.trendText }}
 										</span>
 									</td>
-									<td class="px-6 py-4 text-sm">
+									<td
+										class="px-6 py-5 text-sm border-b border-gray-200 dark:border-gray-700"
+									>
 										<button
 											@click="viewRecord(record.id)"
-											class="text-primary-600 hover:text-primary-700 dark:hover:text-primary-400"
+											class="px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-colors shadow-sm hover:shadow-md flex items-center"
 										>
+											<i class="fas fa-chart-line mr-2"></i>
 											查看详情
 										</button>
 									</td>
@@ -338,13 +372,129 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- 查看详情 -->
+			<div
+				v-if="showDetails"
+				class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70 backdrop-blur-sm"
+			>
+				<div
+					class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-0 w-[70%] max-w-4xl mx-4 animate-fadeIn"
+				>
+					<div
+						class="bg-primary-50 dark:bg-primary-900/30 px-6 py-5 border-b border-gray-200 dark:border-gray-700 rounded-t-2xl flex justify-between items-center"
+					>
+						<h3
+							class="text-xl font-bold text-primary-700 dark:text-primary-300"
+						>
+							测评历史详情
+						</h3>
+						<button
+							@click="showDetails = false"
+							class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-2 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-colors"
+						>
+							<i class="fas fa-times"></i>
+						</button>
+					</div>
+
+					<div class="p-6">
+						<div class="overflow-x-auto">
+							<table class="w-full text-left">
+								<thead>
+									<tr class="bg-primary-50 dark:bg-primary-900/30">
+										<th
+											class="px-6 py-4 text-sm font-bold text-primary-700 dark:text-primary-300 border-b-2 border-primary-200 dark:border-primary-800"
+										>
+											测评名称
+										</th>
+										<th
+											class="px-6 py-4 text-sm font-bold text-primary-700 dark:text-primary-300 border-b-2 border-primary-200 dark:border-primary-800"
+										>
+											完成时间
+										</th>
+										<th
+											class="px-6 py-4 text-sm font-bold text-primary-700 dark:text-primary-300 border-b-2 border-primary-200 dark:border-primary-800"
+										>
+											结果
+										</th>
+										<th
+											class="px-6 py-4 text-sm font-bold text-primary-700 dark:text-primary-300 border-b-2 border-primary-200 dark:border-primary-800"
+										>
+											变化趋势
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr
+										v-for="(record, index) in detailsList"
+										:key="record.id"
+										:class="[
+											index % 2 === 0
+												? 'bg-white dark:bg-gray-800'
+												: 'bg-gray-50 dark:bg-gray-800/50',
+											'hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors'
+										]"
+									>
+										<td
+											class="px-6 py-5 text-sm border-b border-gray-200 dark:border-gray-700"
+										>
+											<span class="font-semibold text-gray-800 dark:text-gray-200">{{ record.title }}</span>
+										</td>
+										<td
+											class="px-6 py-5 text-sm text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700"
+										>
+											{{ record.dateTime }}
+										</td>
+										<td
+											class="px-6 py-5 border-b border-gray-200 dark:border-gray-700"
+										>
+											<span
+												:class="[
+													'px-4 py-2 text-xs font-bold rounded-full shadow-sm',
+													record.levelClass
+												]"
+												>{{ record.level }} ({{ record.score }}分)</span
+											>
+										</td>
+										<td
+											class="px-6 py-5 border-b border-gray-200 dark:border-gray-700"
+										>
+											<span
+												:class="[
+													'flex items-center font-medium',
+													record.trendClass
+												]"
+											>
+												<i :class="record.trendIcon + ' mr-2 text-lg'"></i>
+												{{ record.trendText }}
+											</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<div
+						class="bg-gray-50 dark:bg-gray-800/50 px-6 py-5 border-t border-gray-200 dark:border-gray-700 rounded-b-2xl flex justify-end"
+					>
+						<button
+							@click="showDetails = false"
+							class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-colors shadow-md hover:shadow-lg font-medium flex items-center"
+						>
+							<i class="fas fa-times-circle mr-2"></i> 关闭
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</main-layout>
 </template>
 
 <script>
 import MainLayout from '@/layouts/MainLayout.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { questionnaireApi } from '/@/api/questionnaire';
 
 export default {
 	name: 'AssessmentPage',
@@ -598,48 +748,10 @@ export default {
 					}
 				]
 			},
-			{
-				id: 4,
-				title: '幸福感指数（OHI）',
-				description: '衡量个体主观幸福感和生活满意度的量表',
-				timeEstimate: '8',
-				icon: 'fas fa-smile',
-				bgColor: 'bg-gradient-to-r from-yellow-400 to-yellow-600',
-				questions: [
-					// 问题列表...
-				]
-			}
 		]);
 
 		// 历史记录数据
-		const history = ref([
-			{
-				id: 1,
-				title: '抑郁症筛查（PHQ-9）',
-				date: '2023-07-15',
-				score: 3,
-				level: '轻微',
-				levelClass:
-					'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-				trend: -2,
-				trendClass: 'text-green-500 dark:text-green-400',
-				trendIcon: 'fas fa-arrow-down',
-				trendText: '2分'
-			},
-			{
-				id: 2,
-				title: '睡眠质量指数（PSQI）',
-				date: '2023-07-05',
-				score: 4,
-				level: '良好',
-				levelClass:
-					'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-				trend: 0,
-				trendClass: 'text-gray-500 dark:text-gray-400',
-				trendIcon: 'fas fa-minus',
-				trendText: '持平'
-			}
-		]);
+		const history = ref([]);
 
 		// 状态变量
 		const activeQuestionnaire = ref(null);
@@ -810,17 +922,46 @@ export default {
 		};
 
 		// 保存结果
-		const saveResults = () => {
+		const saveResults = async () => {
+			const res = await questionnaireApi.submitMentalRecord({
+				score: testScore.value.score,
+				level: testScore.value.level,
+				description: testScore.value.description,
+				suggestion: testScore.value.suggestions.join(','),
+				questionnaireId: activeQuestionnaire.value
+			});
 			alert('结果已保存！');
 			closeResults();
+			getMentalHistoryList();
 		};
 
 		// 查看历史记录
 		const viewRecord = (id) => {
-			alert(`查看记录 ID: ${id}`);
+			// alert(`查看记录 ID: ${id}`);
+			questionnaireApi
+				.getQuestionnaireHistory({ questionnaireId: id })
+				.then((result) => {
+					showDetails.value = true;
+					detailsList.value = result.content;
+				});
 		};
 
+		const getMentalHistoryList = () => {
+			questionnaireApi.getMentalHistory().then((result) => {
+				history.value = result.content;
+			});
+		};
+
+		onMounted(() => {
+			getMentalHistoryList();
+		});
+
+		const showDetails = ref(false);
+		const detailsList = ref([]);
+
 		return {
+			detailsList,
+			showDetails,
 			questionnaires,
 			history,
 			activeQuestionnaire,
@@ -846,51 +987,120 @@ export default {
 </script>
 
 <style scoped>
+.assessment-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 .scale-animation {
-	transition: transform 0.3s ease-in-out;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .scale-animation:hover {
-	transform: scale(1.03);
+  transform: translateY(-5px);
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
 }
 
 .primary-100 {
-	background-color: rgba(93, 92, 222, 0.1);
+  background-color: rgba(93, 92, 222, 0.1);
+}
+
+.primary-200 {
+  background-color: rgba(93, 92, 222, 0.2);
+}
+
+.primary-300 {
+  color: #9796f0;
 }
 
 .primary-400 {
-	color: #7e7de6;
+  color: #7e7de6;
+}
+
+.primary-50 {
+  background-color: rgba(93, 92, 222, 0.05);
 }
 
 .primary-600 {
-	color: #5d5cde;
+  color: #5d5cde;
 }
 
 .primary-700 {
-	color: #4847b8;
+  color: #4847b8;
+}
+
+.bg-primary-50 {
+  background-color: rgba(93, 92, 222, 0.05);
 }
 
 .bg-primary-100 {
-	background-color: rgba(93, 92, 222, 0.1);
+  background-color: rgba(93, 92, 222, 0.1);
 }
 
 .bg-primary-600 {
-	background-color: #5d5cde;
+  background-color: #5d5cde;
 }
 
 .bg-primary-700 {
-	background-color: #4847b8;
+  background-color: #4847b8;
 }
 
 .bg-primary-900 {
-	background-color: rgba(93, 92, 222, 0.2);
+  background-color: rgba(93, 92, 222, 0.2);
+}
+
+.border-primary-200 {
+  border-color: rgba(93, 92, 222, 0.2);
 }
 
 .border-primary-400 {
-	border-color: #7e7de6;
+  border-color: #7e7de6;
 }
 
 .border-primary-600 {
-	border-color: #5d5cde;
+  border-color: #5d5cde;
+}
+
+.border-primary-800 {
+  border-color: #3c3b9b;
+}
+
+/* 确保暗模式下的配色和谐 */
+.dark .text-primary-300 {
+  color: #9796f0;
+}
+
+.dark .text-primary-700 {
+  color: #6e6dff;
 }
 </style>
