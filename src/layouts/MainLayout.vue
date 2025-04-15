@@ -1,17 +1,16 @@
 <template>
   <div class="min-h-screen bg-gray-50 flex">
     <!-- 左侧导航栏 - 桌面版 -->
-    <aside class="w-64 bg-white shadow-md hidden md:block">
+    <aside class="w-64 bg-blue-100 shadow-md hidden md:block">
       <div class="px-4 py-6">
-        <div class="flex items-center mb-6">
-          <img class="h-8 w-auto" src="@/assets/logo.svg" alt="心理健康助手" />
-          <span class="ml-2 text-lg font-medium text-indigo-600">心理健康助手</span>
+        <div class="flex flex-col  mb-6">
+          <img class="h-18 w-20" src="@/assets/images/star.png" alt="心理健康助手" />
+          <p class="mt-5 text-xl text-yellow-500">心理健康助手</p>
+          <div class="divider"></div>
         </div>
         
         <nav class="mt-6">
-          <div class="mb-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            功能导航
-          </div>
+         
           <ul class="space-y-2">
             <li v-for="item in navigationItems" :key="item.name">
               <router-link 
@@ -30,15 +29,15 @@
 
     <div class="flex-1 flex flex-col">
       <!-- 顶部导航栏 -->
-      <header class="bg-white shadow-sm sticky top-0 z-10">
+      <header class="bg-blue-300 shadow-sm sticky top-0 z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex justify-between h-16">
-            <div class="flex items-center">
+          <div class="flex justify-between h-16 ">
+            <div class="flex items-center ">
               <div class="md:hidden flex-shrink-0 flex items-center">
                 <img class="h-8 w-auto" src="@/assets/logo.svg" alt="心理健康助手" />
                 <span class="ml-2 text-xl font-semibold text-indigo-600">心理健康助手</span>
               </div>
-              <div class="ml-4 text-gray-700">
+              <div class="ml-4 text-gray-700 ">
                 <div class="text-sm text-gray-500">欢迎回来</div>
                 <div class="text-base font-medium">祝您今天心情愉快</div>
               </div>
@@ -200,5 +199,16 @@ export default {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #9ca3af;
+}
+
+.bt{
+  height: 20vh;
+}
+
+
+.divider {
+  height:4px; /* 调整高度以适应虚线的视觉效果 */
+  border-top: 4px dashed #f3dc76; /* 使用虚线 */
+  margin: 10px 0;
 }
 </style>

@@ -24,7 +24,7 @@ export const staticRoutesList: RouteRecordRaw[] = [
 	{
 		path: '/',
 		name: 'Root',
-		redirect: '/home',
+		redirect: '/login',
 		meta: {
 			title: 'Root'
 		}
